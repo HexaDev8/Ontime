@@ -1,5 +1,13 @@
 import type { Metadata, Viewport } from "next";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+
+/** Geometric sans close to the reference design; self-hosted by next/font. */
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-jakarta",
+  display: "swap",
+});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -77,7 +85,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={jakarta.variable}>
       <body className="antialiased bg-slate-50 text-slate-900 min-h-screen flex flex-col">
         {children}
       </body>

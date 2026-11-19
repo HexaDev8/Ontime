@@ -7,15 +7,11 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import {
   ShieldCheck,
   Clock,
   Phone,
   Mail,
-  MapPin,
-  CheckCircle2,
-  Sparkles,
 } from "lucide-react";
 
 export const Footer: React.FC = () => {
@@ -32,7 +28,7 @@ export const Footer: React.FC = () => {
                   alt="On Time Private Limited"
                   width={36}
                   height={36}
-                  className="object-contain"
+                  className="object-contain w-[85%] h-auto"
                 />
               </div>
               <span className="text-xl font-extrabold text-white tracking-tight">
@@ -142,7 +138,7 @@ export const Footer: React.FC = () => {
               </p>
               <p className="flex items-start gap-2">
                 <Mail className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
-                <span>service@ontimelimited.com</span>
+                <span className="min-w-0 break-all">service@ontimelimited.com</span>
               </p>
               <p className="flex items-start gap-2">
                 <Clock className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />

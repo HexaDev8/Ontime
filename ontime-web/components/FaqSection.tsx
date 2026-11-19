@@ -24,7 +24,7 @@ export const FaqSection: React.FC = () => {
 
   return (
     <section id="faq" className="py-20 md:py-28 bg-white relative">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
           badge="Frequently Asked Questions"
           title="Direct Answers to"
@@ -32,7 +32,7 @@ export const FaqSection: React.FC = () => {
           description="Clear facts about our services, booking process, safety standards, and pricing for home and facility managers."
         />
 
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 items-start">
           {faqData.map((faq, idx) => {
             const isOpen = openIndex === idx;
             return (

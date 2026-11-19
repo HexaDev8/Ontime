@@ -9,6 +9,7 @@
 import React from "react";
 import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/components/HeroSection";
+import { BentoSection } from "@/components/BentoSection";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ServiceCard, ServiceItem } from "@/components/ServiceCard";
 import { FeatureGrid } from "@/components/FeatureGrid";
@@ -88,8 +89,11 @@ export default function HomePage() {
       <Navbar />
 
       <main className="flex-1">
-        {/* Hero Section */}
+        {/* Hero Section (Asymmetric Minimalist Design with Search Pill & Floating Bento Overlays) */}
         <HeroSection />
+
+        {/* Bento Grid Showcase inspired by Modern Redesign Reference */}
+        <BentoSection />
 
         {/* Core Services Breakdown */}
         <section id="services" className="py-20 md:py-28 bg-slate-50/50 relative">

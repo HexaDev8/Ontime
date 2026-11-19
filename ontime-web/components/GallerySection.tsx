@@ -84,7 +84,7 @@ export const GallerySection: React.FC = () => {
 
                 {/* Top Badge */}
                 <div className="absolute top-3 right-3">
-                  <span className="text-[11px] font-bold bg-white/90 text-slate-800 backdrop-blur-md px-2.5 py-1 rounded-full shadow-xs">
+                  <span className="text-xs font-bold bg-white/90 text-slate-800 backdrop-blur-md px-2.5 py-1 rounded-full shadow-xs">
                     {item.tag}
                   </span>
                 </div>
@@ -97,7 +97,7 @@ export const GallerySection: React.FC = () => {
                   <p className="text-sm font-bold leading-snug">
                     {item.caption}
                   </p>
-                  <div className="mt-2 flex items-center gap-1.5 text-[11px] text-slate-300">
+                  <div className="mt-2 flex items-center gap-1.5 text-xs text-slate-300">
                     <CheckCircle2 className="w-3.5 h-3.5 text-sky-400" />
                     <span>Completed by On Time Certified Crew</span>
                   </div>

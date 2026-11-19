@@ -4,18 +4,82 @@
   :root {
     --background: #f8fafc;
     --foreground: #0f172a;
+    /* Widen max-w-7xl from 80rem to 84rem so containers fill ~93% of large screens */
+    --container-7xl: 84rem;
   }
 }
 
 html {
   scroll-behavior: smooth;
+  /* Never let long words / URLs force horizontal scrolling on tiny phones. */
+  overflow-wrap: break-word;
+  -webkit-text-size-adjust: 100%;
+}
+
+/*
+ * ── Fluid scaling for every screen size ─────────────────────────────────
+ * All Tailwind spacing, type and container widths (max-w-7xl = 84rem) are in
+ * rem, so scaling the root font-size scales the WHOLE layout proportionally.
+ *
+ *  • < 360px   (small phones: 320px iPhone SE)     → 93.75% (15px)
+ *  • 360–1439px (phones, tablets, standard laptops) → 100%   (16px)
+ *  • >= 1440px (large laptops, 24", 27", 32", 4K)   → 1.1111vw (100vw / 90)
+ *    Because max-w-7xl is 84rem and 1rem = 100vw / 90, the container is
+ *    always 84 / 90 = 93.3% of the viewport width at 1440px, 1920px (27" FHD),
+ *    2560px (27" QHD/5K), 3440px (Ultrawide), and 3840px (4K).
+ */
+@media (max-width: 359.98px) {
+  html {
+    font-size: 93.75%;
+  }
+}
+
+@media (min-width: 1440px) {
+  html {
+    font-size: clamp(1rem, 1.1111vw, 2.75rem);
+  }
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   overflow-x: hidden;
+}
+
+/*
+ * Hero photo card responsive height in rem (scales fluidly with root font-size).
+ * Defined directly in globals.css so it never depends on JIT arbitrary class scanning.
+ */
+.hero-photo-frame {
+  height: 27.5rem;
+}
+@media (min-width: 640px) {
+  .hero-photo-frame {
+    height: 32.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .hero-photo-frame {
+    height: 38.75rem;
+  }
+}
+@media (min-width: 1280px) {
+  .hero-photo-frame {
+    height: 41.25rem;
+  }
+}
+
+/*
+ * Hero notch inverted corner ("fillet").
+ * A 1.5rem square filled with the hero background, minus a quarter circle,
+ * which makes the notch around the "Book Now" button blend smoothly into
+ * the photo. Reads its color from --hero-bg (set on the hero <section>).
+ */
+.notch-fillet {
+  width: 1.5rem;
+  height: 1.5rem;
+  background: radial-gradient(circle at 0 100%, transparent 1.5rem, var(--hero-bg) calc(1.5rem + 0.5px));
 }
 
 /* Glassmorphism utility classes */

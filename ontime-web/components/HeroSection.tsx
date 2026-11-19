@@ -1,198 +1,203 @@
 /**
- * @file app/components/HeroSection.tsx
- * @description Hero component inspired by modern SaaS/advisory landing pages.
- * Features connected workflow node cards, verified metrics (e.g. 99.8% On-Time, 2,500+ Properties),
- * glowing sky-blue ambiance, and direct booking call-to-action.
+ * @file components/HeroSection.tsx
+ * @description Hero section recreated from the "Landing Pages Redesign" reference.
+ *
+ * DESKTOP (lg+) — 2-column grid:
+ * ┌──────────────────────────────┬───────────────────────┐
+ * │ HeroNav (logo + links)       │  Photo card  [Book ●] │ ← CTA sits in a notch
+ * │                              │ ┌────────┐            │   cut into the photo
+ * │ small label                  │ │Today's │  photo     │
+ * │ Big headline + avatars       │ │jobs    │            │ ← floating cards
+ * │ paragraph                    │ └────────┘            │   overlap left edge
+ * │ [Hi On Time, I need…  (→)]   │ ┌──────┐              │
+ * │                              │ │washer│              │
+ * │ (tag) (tag) (tag) (+12)      │ (crew pill)    (→) •  │
+ * └──────────────────────────────┴───────────────────────┘
+ *
+ * MOBILE — stacked: HeroNav → photo card (headline overlaid in white, a small
+ * job card overlapping its bottom edge) → tags → paragraph → request pill.
+ *
+ * Server Component: only HeroNav, HeroSearch and HeroCarousel ship client JS.
+ * The notch background color comes from the `--hero-bg` CSS variable, so it
+ * MUST match the section background (set once on the <section> below).
  */
 
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
-import {
-  ShieldCheck,
-  Clock,
-  Sparkles,
-  ArrowRight,
-  CheckCircle2,
-  Wrench,
-  Tv,
-  Star,
-  Users,
-} from "lucide-react";
+import type { CSSProperties } from "react";
+import { Sparkles, Zap, Tv, WashingMachine, CalendarCheck, Check } from "lucide-react";
+import { HeroNav } from "./hero/HeroNav";
+import { HeroSearch } from "./hero/HeroSearch";
+import { HeroTopicTags } from "./hero/HeroTopicTags";
+import { HeroCarousel, type HeroSlide } from "./hero/HeroCarousel";
 
-export const HeroSection: React.FC = () => {
+/** Real On Time job photos shown in the hero card. */
+const slides: HeroSlide[] = [
+  {
+    src: "/images/gallery/clean-3.jpg",
+    alt: "Living room after a full home deep clean by On Time Private Limited",
+    label: "Home Deep Cleaning",
+  },
+  {
+    src: "/images/services/cleaning-main.jpg",
+    alt: "Freshly cleaned lounge and hardwood floor in a residential property",
+    label: "Living Space Care",
+  },
+  {
+    src: "/images/gallery/electric-1.jpg",
+    alt: "Wall-mounted television installed by an On Time technician",
+    label: "TV Wall Mounting",
+  },
+];
+
+/** Pills under the hero (bottom-left on desktop, under the photo on mobile). */
+const topics = ["Cleaning", "Electrical", "Plumbing", "Installation"];
+
+/** Rows of the floating "Today's Jobs" card. */
+const todaysJobs = [
+  { icon: Sparkles, title: "Office Deep Clean", time: "09:00 AM", status: "Done", tone: "bg-sky-100 text-sky-600" },
+  { icon: Zap, title: "Wiring Repair", time: "11:30 AM", status: "On site", tone: "bg-amber-100 text-amber-600" },
+  { icon: Tv, title: "TV Installation", time: "02:00 PM", status: "Next", tone: "bg-rose-100 text-rose-500" },
+];
+
+/** Small floating card (reused on mobile & desktop at different positions). */
+function ApplianceCard({ className = "" }: { className?: string }) {
   return (
-    <section className="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden bg-gradient-to-b from-sky-50/70 via-white to-slate-50">
-      {/* Ambient background glows */}
-      <div
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] sm:w-[900px] sm:h-[450px] bg-gradient-to-tr from-sky-300/30 to-cyan-200/20 blur-3xl -z-10 rounded-full pointer-events-none"
-        aria-hidden="true"
-      />
-      <div
-        className="absolute top-10 right-10 w-72 h-72 bg-sky-200/20 blur-2xl -z-10 rounded-full pointer-events-none"
-        aria-hidden="true"
-      />
+    <div className={`rounded-2xl bg-white p-3 shadow-xl shadow-slate-900/10 border border-slate-100 ${className}`}>
+      <div className="flex items-center gap-2.5">
+        <span className="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center">
+          <WashingMachine className="w-5 h-5" />
+        </span>
+        <span className="text-xs font-bold text-slate-900">Washing Machine Setup</span>
+      </div>
+      <div className="mt-2 flex gap-1.5">
+        {["Plumbed", "Levelled", "Tested"].map((chip) => (
+          <span key={chip} className="inline-flex items-center gap-0.5 rounded-full bg-slate-50 px-2 py-0.5 text-xs font-medium text-slate-500">
+            <Check className="w-2.5 h-2.5 text-sky-500" /> {chip}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
 
+export function HeroSection() {
+  return (
+    <section
+      id="hero"
+      aria-labelledby="hero-title"
+      className="relative bg-[var(--hero-bg)] pt-4 pb-14 sm:pt-6 lg:pb-20"
+      style={{ "--hero-bg": "#f6f9fc" } as CSSProperties}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Main Central Typography */}
-        <div className="text-center max-w-4xl mx-auto space-y-6">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/90 border border-sky-200 shadow-sm text-sky-700 text-xs sm:text-sm font-semibold backdrop-blur-md">
-            <span className="flex h-2 w-2 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
-            </span>
-            <span>Premier Property Care & Maintenance</span>
-            <span className="text-slate-300">|</span>
-            <span className="text-slate-600 flex items-center gap-1 font-medium">
-              <ShieldCheck className="w-4 h-4 text-sky-500" /> 100% Guaranteed Quality
-            </span>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:grid-rows-[auto_1fr] lg:gap-x-12 lg:gap-y-0">
+          {/* ── 1. In-hero navigation (row 1, left) ───────────────────── */}
+          <div className="lg:col-span-6 lg:row-start-1 lg:pt-3">
+            <HeroNav />
           </div>
 
-          {/* Heading */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-slate-900 tracking-tight leading-[1.12]">
-            Keep Your Properties{" "}
-            <span className="bg-gradient-to-r from-sky-500 via-sky-600 to-cyan-600 bg-clip-text text-transparent">
-              Immaculate, Powered
-            </span>{" "}
-            & Fully Installed.
-          </h1>
+          {/* ── 2. Photo card (spans both rows, right) ────────────────── */}
+          <div className="relative lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-1">
+            <div className="hero-photo-frame relative min-h-96">
+              <HeroCarousel slides={slides} />
 
-          {/* Natural language summary for GEO & AEO */}
-          <p className="text-lg sm:text-xl text-slate-600 font-normal max-w-2xl mx-auto leading-relaxed">
-            <strong>On Time Private Limited</strong> provides verified, scheduled maintenance,
-            deep cleaning for offices & homes, prompt plumbing and electrical repairs,
-            and precision equipment installation. Reliable, punctual, and fully insured.
-          </p>
+              {/* Notch with "Book Now" CTA (desktop). Two `.notch-fillet`
+                  spans create the smooth inverted corners. */}
+              <div className="absolute top-0 right-0 z-20 hidden lg:block rounded-bl-[1.75rem] bg-[var(--hero-bg)] pb-3 pl-3">
+                <a
+                  href="#contact"
+                  className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 hover:border-sky-400 hover:text-sky-600 transition-colors"
+                >
+                  Book Now <CalendarCheck className="w-4 h-4" />
+                </a>
+                <span aria-hidden="true" className="notch-fillet absolute top-0 -left-6" />
+                <span aria-hidden="true" className="notch-fillet absolute -bottom-6 right-0" />
+              </div>
 
-          {/* CTA Group */}
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5">
-            <a
-              href="#contact"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-600 hover:to-sky-700 text-white font-bold text-base px-8 py-4 rounded-2xl shadow-lg shadow-sky-500/25 hover:shadow-xl hover:shadow-sky-500/35 transition-all duration-300 transform active:scale-98"
+              {/* Floating "Today's Jobs" card — overlaps the photo's left edge (desktop) */}
+              <div className="absolute top-[20%] -left-14 z-10 hidden w-60 rounded-2xl bg-white p-4 shadow-xl shadow-slate-900/10 border border-slate-100 lg:block">
+                <p className="text-xs font-bold text-slate-900">Today&apos;s Jobs</p>
+                <ul className="mt-3 space-y-2.5">
+                  {todaysJobs.map(({ icon: Icon, title, time, status, tone }) => (
+                    <li key={title} className="flex items-center gap-2.5">
+                      <span className={`w-8 h-8 rounded-full flex items-center justify-center ${tone}`}>
+                        <Icon className="w-4 h-4" />
+                      </span>
+                      <span className="flex-1 leading-tight">
+                        <span className="block text-xs font-semibold text-slate-800">{title}</span>
+                        <span className="block text-xs text-slate-400">{time}</span>
+                      </span>
+                      <span className="text-xs font-bold text-slate-700">{status}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Floating appliance card — desktop position */}
+              <ApplianceCard className="absolute top-[55%] -left-8 z-10 hidden lg:block" />
+
+              {/* Mobile: headline overlaid on the photo (visual only; the real
+                  <h1> below stays in the DOM for SEO / screen readers). */}
+              <p
+                aria-hidden="true"
+                className="absolute inset-x-4 min-[400px]:inset-x-6 bottom-14 text-center text-[1.75rem] min-[400px]:text-[2rem] sm:text-4xl md:text-5xl font-extrabold leading-[1.1] tracking-tight text-white lg:hidden"
+              >
+                A Simplified Way to Keep Your Property Spotless.
+              </p>
+
+              {/* Mobile: appliance card overlapping the bottom edge */}
+              <ApplianceCard className="absolute left-1/2 bottom-0 z-10 w-max -translate-x-1/2 translate-y-1/2 lg:hidden" />
+            </div>
+          </div>
+
+          {/* ── 3. Copy column (row 2, left) ──────────────────────────── */}
+          <div className="flex flex-col pt-10 lg:col-span-6 lg:row-start-2 lg:pt-0 lg:pb-2">
+            {/* Small label */}
+            <p className="hidden text-sm font-semibold text-sky-500 lg:mt-auto lg:block">
+              Property Care Experts
+            </p>
+
+            {/* Headline — screen-reader only on mobile (the overlay shows it visually) */}
+            <h1
+              id="hero-title"
+              className="sr-only lg:not-sr-only lg:mt-3 lg:text-5xl xl:text-[3.5rem] lg:font-extrabold lg:leading-[1.12] lg:tracking-tight lg:text-slate-900"
             >
-              <span>Schedule Service Now</span>
-              <ArrowRight className="w-5 h-5" />
-            </a>
-
-            <a
-              href="#services"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-base px-7 py-4 rounded-2xl border border-slate-200/90 shadow-sm hover:border-sky-300 transition-all duration-200"
-            >
-              <span>Explore Services</span>
-            </a>
-          </div>
-
-          {/* Trust Highlights */}
-          <div className="pt-4 flex items-center justify-center flex-wrap gap-6 text-xs sm:text-sm text-slate-500 font-medium">
-            <span className="inline-flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-sky-500" /> Transparent Pricing
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-sky-500" /> Certified Technicians
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-sky-500" /> Same-Day Availability
-            </span>
-          </div>
-        </div>
-
-        {/* Modern Interactive Feature Showcase Grid (Inspired by the Adiyo visual structure) */}
-        <div className="mt-14 sm:mt-16 relative max-w-5xl mx-auto">
-          {/* Decorative connector line */}
-          <div className="hidden lg:block absolute top-1/2 left-8 right-8 h-0.5 border-t-2 border-dashed border-sky-200/80 -z-10" />
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Card 1: Cleaning Specialty */}
-            <div className="glass-panel p-6 rounded-2xl border border-slate-200/90 shadow-md hover:shadow-xl hover:border-sky-300 transition-all duration-300 group">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 rounded-xl bg-sky-100/80 text-sky-600 flex items-center justify-center group-hover:bg-sky-500 group-hover:text-white transition-colors">
-                  <Sparkles className="w-6 h-6" />
-                </div>
-                <span className="text-xs font-bold text-sky-600 bg-sky-50 px-2.5 py-1 rounded-full border border-sky-100">
-                  99.8% Spotless
+              A Simplified Way to Keep Your{" "}
+              <span className="text-sky-500">Property Spotless.</span>
+              {/* Inline avatar stack (decorative) */}
+              <span aria-hidden="true" className="ml-3 hidden -space-x-2 align-middle lg:inline-flex">
+                {[
+                  ["DP", "bg-sky-500"],
+                  ["RW", "bg-cyan-500"],
+                  ["MF", "bg-slate-800"],
+                ].map(([initials, bg]) => (
+                  <span
+                    key={initials}
+                    className={`inline-flex w-9 h-9 items-center justify-center rounded-full ring-2 ring-white text-xs font-bold text-white ${bg}`}
+                  >
+                    {initials}
+                  </span>
+                ))}
+                <span className="inline-flex w-9 h-9 items-center justify-center rounded-full ring-2 ring-white bg-white text-xs font-bold text-slate-600 border border-slate-200">
+                  2k+
                 </span>
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 group-hover:text-sky-600 transition-colors">
-                Professional Cleaning
-              </h3>
-              <p className="mt-2 text-sm text-slate-600 leading-relaxed">
-                Comprehensive sanitization and deep cleaning for offices, private houses, luxury homes, and student residences.
-              </p>
-              <div className="mt-4 pt-4 border-t border-slate-100 flex items-center gap-2 text-xs font-semibold text-slate-500">
-                <Clock className="w-3.5 h-3.5 text-sky-500" /> Flexible Recurring or One-Off
-              </div>
+              </span>
+            </h1>
+
+            {/* Supporting copy (GEO-friendly plain-language summary) */}
+            <p className="order-2 mt-5 max-w-lg text-sm leading-relaxed text-slate-500 lg:order-none lg:mt-5 lg:text-base">
+              Book cleaning, electrical, plumbing and appliance installation with On Time
+              Private Limited — certified crews that arrive exactly when promised. That&apos;s it.
+            </p>
+
+            {/* Request pill */}
+            <div className="order-3 mt-5 lg:order-none lg:mt-7">
+              <HeroSearch />
             </div>
 
-            {/* Card 2: Electrical & Plumbing (Central Hero Card) */}
-            <div className="glass-panel p-6 rounded-2xl border-2 border-sky-400 shadow-xl relative overflow-hidden bg-white/90 group transform md:-translate-y-2">
-              <div className="absolute top-0 right-0 bg-gradient-to-l from-sky-500 to-cyan-500 text-white text-[10px] font-extrabold uppercase px-3 py-1 rounded-bl-xl tracking-wider">
-                Emergency & Regular
-              </div>
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-sky-500 to-cyan-500 text-white flex items-center justify-center shadow-md shadow-sky-500/30">
-                  <Wrench className="w-6 h-6" />
-                </div>
-                <div className="flex items-center text-amber-500 text-xs font-bold gap-1">
-                  <Star className="w-3.5 h-3.5 fill-current" />
-                  <span>4.9 / 5.0 Rating</span>
-                </div>
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 group-hover:text-sky-600 transition-colors">
-                Plumbing & Electrical Works
-              </h3>
-              <p className="mt-2 text-sm text-slate-600 leading-relaxed">
-                Certified wiring repairs, socket and breaker overhauls, lightbulb setups, tap/leak repairs, and pipe maintenance.
-              </p>
-              <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-semibold text-slate-500">
-                <span className="text-sky-600 font-bold">Licensed Pros</span>
-                <span>Fast Diagnostics</span>
-              </div>
-            </div>
-
-            {/* Card 3: Equipment & Appliance Installation */}
-            <div className="glass-panel p-6 rounded-2xl border border-slate-200/90 shadow-md hover:shadow-xl hover:border-sky-300 transition-all duration-300 group">
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 rounded-xl bg-sky-100/80 text-sky-600 flex items-center justify-center group-hover:bg-sky-500 group-hover:text-white transition-colors">
-                  <Tv className="w-6 h-6" />
-                </div>
-                <span className="text-xs font-bold text-sky-600 bg-sky-50 px-2.5 py-1 rounded-full border border-sky-100">
-                  Zero Hassle
-                </span>
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 group-hover:text-sky-600 transition-colors">
-                Equipment Installation
-              </h3>
-              <p className="mt-2 text-sm text-slate-600 leading-relaxed">
-                Precision setup for modern appliances including wall-mounted TVs, washing machines, microwaves, and electronics.
-              </p>
-              <div className="mt-4 pt-4 border-t border-slate-100 flex items-center gap-2 text-xs font-semibold text-slate-500">
-                <ShieldCheck className="w-3.5 h-3.5 text-sky-500" /> Calibration & Testing Included
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Stats Strip */}
-        <div className="mt-14 max-w-4xl mx-auto rounded-2xl bg-white border border-slate-200/80 p-6 shadow-sm grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          <div>
-            <div className="text-3xl font-extrabold text-sky-600">2,500+</div>
-            <div className="text-xs sm:text-sm text-slate-500 mt-1 font-medium">Properties Serviced</div>
-          </div>
-          <div>
-            <div className="text-3xl font-extrabold text-sky-600">99.8%</div>
-            <div className="text-xs sm:text-sm text-slate-500 mt-1 font-medium">On-Time Arrival</div>
-          </div>
-          <div>
-            <div className="text-3xl font-extrabold text-sky-600">100%</div>
-            <div className="text-xs sm:text-sm text-slate-500 mt-1 font-medium">Satisfaction Guarantee</div>
-          </div>
-          <div>
-            <div className="text-3xl font-extrabold text-sky-600">24/7</div>
-            <div className="text-xs sm:text-sm text-slate-500 mt-1 font-medium">Support Hotline</div>
+            {/* Topic tags — first under the photo on mobile, bottom-left on desktop */}
+            <HeroTopicTags topics={topics} />
           </div>
         </div>
       </div>
     </section>
   );
-};
+}
