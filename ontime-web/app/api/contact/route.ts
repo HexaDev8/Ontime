@@ -13,16 +13,6 @@ function isValidUKPhoneNumber(phone: string): boolean {
   return /^(?:(?:\+44|0044)[1-9]\d{9}|0[12378]\d{9})$/.test(cleaned);
 }
 
-// Check if selected time is within working hours (09:00 - 17:00)
-function isWithinWorkingHours(timeStr: string): boolean {
-  if (!timeStr) return false;
-  const [hours, minutes] = timeStr.split(":").map(Number);
-  if (isNaN(hours) || isNaN(minutes)) return false;
-  const totalMinutes = hours * 60 + minutes;
-  // 09:00 is 540 min, 17:00 is 1020 min
-  return totalMinutes >= 9 * 60 && totalMinutes <= 17 * 60;
-}
-
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -33,7 +23,6 @@ export async function POST(request: Request) {
       propertyType,
       serviceCategory,
       preferredDate,
-      preferredTime,
       details,
     } = body;
 
@@ -45,7 +34,6 @@ export async function POST(request: Request) {
       !propertyType?.trim() ||
       !serviceCategory?.trim() ||
       !preferredDate?.trim() ||
-      !preferredTime?.trim() ||
       !details?.trim()
     ) {
       return NextResponse.json(
@@ -58,14 +46,6 @@ export async function POST(request: Request) {
     if (!isValidUKPhoneNumber(phone)) {
       return NextResponse.json(
         { error: "Please provide a valid UK phone number (e.g., +44 7438 463543 or 07438 463543)." },
-        { status: 400 }
-      );
-    }
-
-    // Working hours validation (9:00 AM - 5:00 PM)
-    if (!isWithinWorkingHours(preferredTime)) {
-      return NextResponse.json(
-        { error: "Selected time must be within operating hours (9:00 AM – 5:00 PM)." },
         { status: 400 }
       );
     }
@@ -119,10 +99,6 @@ export async function POST(request: Request) {
               <td style="padding: 10px 0; color: #64748b; font-size: 14px; font-weight: 500;">Preferred Date:</td>
               <td style="padding: 10px 0; color: #0f172a; font-size: 15px;">${preferredDate || "As soon as possible"}</td>
             </tr>
-            <tr style="border-bottom: 1px solid #f1f5f9;">
-              <td style="padding: 10px 0; color: #64748b; font-size: 14px; font-weight: 500;">Preferred Time:</td>
-              <td style="padding: 10px 0; color: #0f172a; font-size: 15px; font-weight: 600;">${preferredTime}</td>
-            </tr>
           </tbody>
         </table>
 
@@ -146,7 +122,6 @@ Email: ${email || "Not provided"}
 Service: ${serviceCategory}
 Property Type: ${propertyType}
 Preferred Date: ${preferredDate || "As soon as possible"}
-Preferred Time: ${preferredTime || "Anytime"}
 
 Details / Notes:
 ${details || "No additional notes provided"}

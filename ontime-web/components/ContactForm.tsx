@@ -27,16 +27,6 @@ const isValidUKPhoneNumber = (phone: string): boolean => {
   return /^(?:(?:\+44|0044)[1-9]\d{9}|0[12378]\d{9})$/.test(cleaned);
 };
 
-// Check if selected time is within working hours (09:00 - 17:00)
-const isWithinWorkingHours = (timeStr: string): boolean => {
-  if (!timeStr) return false;
-  const [hours, minutes] = timeStr.split(":").map(Number);
-  if (isNaN(hours) || isNaN(minutes)) return false;
-  const totalMinutes = hours * 60 + minutes;
-  // 09:00 is 540 min, 17:00 is 1020 min
-  return totalMinutes >= 9 * 60 && totalMinutes <= 17 * 60;
-};
-
 export const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState({
     fullName: "",
@@ -46,7 +36,6 @@ export const ContactForm: React.FC = () => {
     serviceCategory: "Professional Cleaning",
     details: "",
     preferredDate: "",
-    preferredTime: "",
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -85,7 +74,6 @@ export const ContactForm: React.FC = () => {
       !formData.phone.trim() ||
       !formData.email.trim() ||
       !formData.preferredDate.trim() ||
-      !formData.preferredTime.trim() ||
       !formData.serviceCategory.trim() ||
       !formData.propertyType.trim() ||
       !formData.details.trim()
@@ -97,12 +85,6 @@ export const ContactForm: React.FC = () => {
     // Validate UK Phone number
     if (!isValidUKPhoneNumber(formData.phone)) {
       setErrorMessage("Please enter a valid UK phone number (e.g. +44 7438 463543).");
-      return;
-    }
-
-    // Validate Preferred Time is within working hours (9:00 AM – 5:00 PM)
-    if (!isWithinWorkingHours(formData.preferredTime)) {
-      setErrorMessage("Please choose a time within our operating hours (Monday to Saturday: 9:00 AM – 5:00 PM).");
       return;
     }
 
@@ -247,7 +229,6 @@ export const ContactForm: React.FC = () => {
                         serviceCategory: "Professional Cleaning",
                         details: "",
                         preferredDate: "",
-                        preferredTime: "",
                       });
                     }}
                     className="mt-4 px-6 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-semibold text-sm transition-colors"
@@ -304,8 +285,8 @@ export const ContactForm: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Email, Preferred Date & Preferred Time */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {/* Email & Date */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
                         Email Address *
@@ -328,25 +309,6 @@ export const ContactForm: React.FC = () => {
                         required
                         value={formData.preferredDate}
                         onChange={(e) => setFormData({ ...formData, preferredDate: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-sky-500 focus:ring-2 focus:ring-sky-100 text-sm text-slate-900 outline-hidden transition-all"
-                      />
-                    </div>
-                    <div>
-                      <div className="flex items-center justify-between mb-1.5">
-                        <label className="block text-xs font-bold text-slate-700 uppercase">
-                          Preferred Time *
-                        </label>
-                        <span className="text-[10px] font-semibold text-slate-400">
-                          9:00 AM – 5:00 PM
-                        </span>
-                      </div>
-                      <input
-                        type="time"
-                        required
-                        min="09:00"
-                        max="17:00"
-                        value={formData.preferredTime}
-                        onChange={(e) => setFormData({ ...formData, preferredTime: e.target.value })}
                         className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-sky-500 focus:ring-2 focus:ring-sky-100 text-sm text-slate-900 outline-hidden transition-all"
                       />
                     </div>
