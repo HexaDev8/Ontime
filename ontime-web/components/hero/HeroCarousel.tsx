@@ -47,6 +47,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
           alt={slide.alt}
           fill
           priority={i === 0}
+          loading={i === 0 ? "eager" : undefined}
           sizes="(max-width: 1024px) 100vw, 45vw"
           className={`object-cover transition-opacity duration-1000 ${i === index ? "opacity-100" : "opacity-0"}`}
         />

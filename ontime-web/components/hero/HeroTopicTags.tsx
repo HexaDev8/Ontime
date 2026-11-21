@@ -1,30 +1,19 @@
 /**
  * @file components/hero/HeroTopicTags.tsx
- * @description Interactive topic pills beneath the hero search bar.
- * Tapping any tag automatically pre-fills the booking form and scrolls down.
+ * @description Topic pills beneath the hero search bar.
+ * Displayed as visual category tags/labels without form click triggers.
  */
 
-"use client";
-
 import React from "react";
-import { PREFILL_EVENT } from "./HeroSearch";
+
+/** Default topic tags for services offered */
+export const defaultTopics = ["Cleaning", "Electrical", "Plumbing", "Installation"];
 
 interface HeroTopicTagsProps {
-  topics: string[];
+  topics?: string[];
 }
 
-export function HeroTopicTags({ topics }: HeroTopicTagsProps) {
-  const handleTopicClick = (topic: string) => {
-    if (typeof window !== "undefined") {
-      window.dispatchEvent(
-        new CustomEvent(PREFILL_EVENT, {
-          detail: `I need ${topic.toLowerCase()} service for my property.`,
-        })
-      );
-      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
+export function HeroTopicTags({ topics = defaultTopics }: HeroTopicTagsProps) {
   return (
     <ul
       aria-label="Service topics"
@@ -32,13 +21,11 @@ export function HeroTopicTags({ topics }: HeroTopicTagsProps) {
     >
       {topics.map((topic) => (
         <li key={topic}>
-          <button
-            type="button"
-            onClick={() => handleTopicClick(topic)}
-            className="inline-block whitespace-nowrap rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-medium text-slate-600 hover:border-sky-300 hover:text-sky-600 transition-colors cursor-pointer"
+          <span
+            className="inline-block whitespace-nowrap rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-medium text-slate-600 shadow-2xs select-none"
           >
             {topic}
-          </button>
+          </span>
         </li>
       ))}
       <li>
@@ -46,7 +33,7 @@ export function HeroTopicTags({ topics }: HeroTopicTagsProps) {
           href="#services"
           className="inline-block whitespace-nowrap rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-medium text-slate-600 hover:border-sky-300 hover:text-sky-600 transition-colors"
         >
-          +12 Services
+          More Services ...
         </a>
       </li>
     </ul>

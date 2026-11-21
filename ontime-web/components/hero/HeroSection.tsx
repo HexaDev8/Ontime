@@ -23,9 +23,9 @@
  */
 
 import type { CSSProperties } from "react";
-import { Sparkles, Zap, Tv, WashingMachine, CalendarCheck, Check } from "lucide-react";
+import { Clock, ShieldCheck, CheckCircle2, WashingMachine, CalendarCheck, Check } from "lucide-react";
 import { HeroNav } from "./HeroNav";
-import { HeroSearch } from "./HeroSearch";
+import { HeroButton } from "./HeroButton";
 import { HeroTopicTags } from "./HeroTopicTags";
 import { HeroCarousel, type HeroSlide } from "./HeroCarousel";
 
@@ -48,29 +48,29 @@ const slides: HeroSlide[] = [
   },
 ];
 
-/** Pills under the hero (bottom-left on desktop, under the photo on mobile). */
-const topics = ["Cleaning", "Electrical", "Plumbing", "Installation"];
-
-/** Rows of the floating "Today's Jobs" card. */
-const todaysJobs = [
-  { icon: Sparkles, title: "Office Deep Clean", time: "09:00 AM", status: "Done", tone: "bg-sky-100 text-sky-600" },
-  { icon: Zap, title: "Wiring Repair", time: "11:30 AM", status: "On site", tone: "bg-amber-100 text-amber-600" },
-  { icon: Tv, title: "TV Installation", time: "02:00 PM", status: "Next", tone: "bg-rose-100 text-rose-500" },
+/** Fast dispatch & service progress steps. */
+const dispatchSteps = [
+  { icon: Clock, title: "Booking Confirmed", subtitle: "Under 15 minutes", tone: "bg-sky-100 text-sky-600" },
+  { icon: ShieldCheck, title: "Technician Assigned", subtitle: "Equipped & ready", tone: "bg-amber-100 text-amber-600" },
+  { icon: CheckCircle2, title: "Job Completed", subtitle: "Tested & signed off", tone: "bg-emerald-100 text-emerald-600" },
 ];
 
-/** Small floating card (reused on mobile & desktop at different positions). */
-function ApplianceCard({ className = "" }: { className?: string }) {
+/** Trust badge floating card (Suggestion 3: Licensed & Insured). */
+function TrustCard({ className = "" }: { className?: string }) {
   return (
-    <div className={`rounded-2xl bg-white p-3 shadow-xl shadow-slate-900/10 border border-slate-100 ${className}`}>
+    <div className={`rounded-2xl bg-white/95 backdrop-blur-md p-3.5 shadow-xl shadow-slate-900/10 border border-slate-100 ${className}`}>
       <div className="flex items-center gap-2.5">
-        <span className="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center">
-          <WashingMachine className="w-5 h-5" />
+        <span className="w-9 h-9 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+          <ShieldCheck className="w-5 h-5" />
         </span>
-        <span className="text-xs font-bold text-slate-900">Washing Machine Setup</span>
+        <div>
+          <p className="text-xs font-bold text-slate-900">Fully Licensed & Insured</p>
+          <p className="text-[10px] text-slate-600">Guaranteed Workmanship</p>
+        </div>
       </div>
-      <div className="mt-2 flex gap-1.5">
-        {["Plumbed", "Levelled", "Tested"].map((chip) => (
-          <span key={chip} className="inline-flex items-center gap-0.5 rounded-full bg-slate-50 px-2 py-0.5 text-xs font-medium text-slate-500">
+      <div className="mt-2.5 flex items-center gap-1.5 flex-wrap">
+        {["Vetted Crew", "Safety Certified", "Work Insured"].map((chip) => (
+          <span key={chip} className="inline-flex items-center gap-1 rounded-full bg-slate-50 px-2 py-0.5 text-[10px] font-medium text-slate-600 border border-slate-100">
             <Check className="w-2.5 h-2.5 text-sky-500" /> {chip}
           </span>
         ))}
@@ -112,27 +112,28 @@ export function HeroSection() {
                 <span aria-hidden="true" className="notch-fillet absolute -bottom-6 right-0" />
               </div>
 
-              {/* Floating "Today's Jobs" card — overlaps the photo's left edge (desktop) */}
-              <div className="absolute top-[20%] -left-14 z-10 hidden w-60 rounded-2xl bg-white p-4 shadow-xl shadow-slate-900/10 border border-slate-100 lg:block">
-                <p className="text-xs font-bold text-slate-900">Today&apos;s Jobs</p>
-                <ul className="mt-3 space-y-2.5">
-                  {todaysJobs.map(({ icon: Icon, title, time, status, tone }) => (
-                    <li key={title} className="flex items-center gap-2.5">
-                      <span className={`w-8 h-8 rounded-full flex items-center justify-center ${tone}`}>
+              {/* Floating "Quick Dispatch" card — overlaps the photo's left edge (desktop) */}
+              <div className="absolute top-[20%] -left-12 z-10 hidden w-64 rounded-2xl bg-white/95 backdrop-blur-md p-4 shadow-xl shadow-slate-900/10 border border-slate-100 lg:block">
+                <p className="text-xs font-bold text-slate-900 tracking-tight pb-2.5 mb-2.5 border-b border-slate-100">
+                  Service Process
+                </p>
+                <ul className="space-y-3">
+                  {dispatchSteps.map(({ icon: Icon, title, subtitle, tone }) => (
+                    <li key={title} className="flex items-center gap-2.5 min-w-0">
+                      <span className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${tone}`}>
                         <Icon className="w-4 h-4" />
                       </span>
-                      <span className="flex-1 leading-tight">
-                        <span className="block text-xs font-semibold text-slate-800">{title}</span>
-                        <span className="block text-xs text-slate-400">{time}</span>
-                      </span>
-                      <span className="text-xs font-bold text-slate-700">{status}</span>
+                      <div className="leading-tight min-w-0">
+                        <p className="text-xs font-semibold text-slate-800 truncate">{title}</p>
+                        <p className="text-[11px] text-slate-400 truncate mt-0.5">{subtitle}</p>
+                      </div>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* Floating appliance card — desktop position */}
-              <ApplianceCard className="absolute top-[55%] -left-8 z-10 hidden lg:block" />
+              {/* Floating trust card — positioned on the right side of the photo (desktop) */}
+              <TrustCard className="absolute top-[58%] -right-10 z-10 hidden lg:block" />
 
               {/* Mobile: headline overlaid on the photo (visual only; the real
                   <h1> below stays in the DOM for SEO / screen readers). */}
@@ -143,8 +144,8 @@ export function HeroSection() {
                 A Simplified Way to Keep Your Property Spotless.
               </p>
 
-              {/* Mobile: appliance card overlapping the bottom edge */}
-              <ApplianceCard className="absolute left-1/2 bottom-0 z-10 w-max -translate-x-1/2 translate-y-1/2 lg:hidden" />
+              {/* Mobile: trust card overlapping the bottom edge */}
+              <TrustCard className="absolute left-1/2 bottom-0 z-10 w-max -translate-x-1/2 translate-y-1/2 lg:hidden" />
             </div>
           </div>
 
@@ -162,7 +163,6 @@ export function HeroSection() {
             >
               A Simplified Way to Keep Your{" "}
               <span className="text-sky-500">Property Spotless.</span>
-
             </h1>
 
             {/* Supporting copy (GEO-friendly plain-language summary) */}
@@ -171,13 +171,13 @@ export function HeroSection() {
               Private Limited — certified crews that arrive exactly when promised. That&apos;s it.
             </p>
 
-            {/* Request pill */}
+            {/* Call to action button */}
             <div className="order-3 mt-5 lg:order-none lg:mt-7">
-              <HeroSearch />
+              <HeroButton />
             </div>
 
             {/* Topic tags — first under the photo on mobile, bottom-left on desktop */}
-            <HeroTopicTags topics={topics} />
+            <HeroTopicTags />
           </div>
         </div>
       </div>

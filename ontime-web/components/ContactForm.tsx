@@ -8,8 +8,7 @@
 
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { PREFILL_EVENT } from "./hero/HeroSearch";
+import React, { useState } from "react";
 import {
   Send,
   CheckCircle2,
@@ -32,52 +31,6 @@ export const ContactForm: React.FC = () => {
 
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-
-  // Pre-fill "Scope Details" and auto-detect category when the user types a request in the hero pill.
-  useEffect(() => {
-    const onPrefill = (e: Event) => {
-      const text = (e as CustomEvent<string>).detail;
-      setSubmitted(false);
-
-      // Smart service category detection based on user query keywords
-      const lower = text.toLowerCase();
-      let matchedCategory = "Professional Cleaning";
-
-      if (
-        lower.includes("wire") ||
-        lower.includes("wiring") ||
-        lower.includes("electric") ||
-        lower.includes("bulb") ||
-        lower.includes("light") ||
-        lower.includes("switch") ||
-        lower.includes("breaker") ||
-        lower.includes("plumb") ||
-        lower.includes("pipe") ||
-        lower.includes("leak") ||
-        lower.includes("drain") ||
-        lower.includes("tap")
-      ) {
-        matchedCategory = "Plumbing & Electrical Services";
-      } else if (
-        lower.includes("install") ||
-        lower.includes("tv") ||
-        lower.includes("wash") ||
-        lower.includes("microwave") ||
-        lower.includes("appliance") ||
-        lower.includes("mount")
-      ) {
-        matchedCategory = "Equipment Installation";
-      }
-
-      setFormData((prev) => ({
-        ...prev,
-        details: text,
-        serviceCategory: matchedCategory,
-      }));
-    };
-    window.addEventListener(PREFILL_EVENT, onPrefill);
-    return () => window.removeEventListener(PREFILL_EVENT, onPrefill);
-  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
