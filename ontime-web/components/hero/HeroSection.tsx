@@ -90,7 +90,7 @@ export function HeroSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:grid-rows-[auto_1fr] lg:gap-x-12 lg:gap-y-0">
           {/* ── 1. In-hero navigation (row 1, left on desktop) ──────── */}
-          <div className="lg:col-span-6 lg:row-start-1 lg:pt-3">
+          <div className="lg:col-span-7 xl:col-span-6 lg:row-start-1 lg:pt-3">
             <HeroNav />
           </div>
 

@@ -18,6 +18,7 @@ export const navLinks: NavItem[] = [
   { name: "Our Work", href: "#gallery" },
   { name: "Process", href: "#process" },
   { name: "FAQ", href: "#faq" },
+  { name: "Contact Us", href: "#contact" },
 ];
 
 /** Hotline used in every "Call" button. Update once here. */

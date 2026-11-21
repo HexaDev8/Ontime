@@ -19,7 +19,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://ontimelimited.com"),
   title: {
-    default: "On Time Private Limited | Professional Property Care, Cleaning & Maintenance",
+    default: "On Time Private Limited",
     template: "%s | On Time Private Limited",
   },
   description:
@@ -77,6 +77,15 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "https://ontimelimited.com",
+  },
+  icons: {
+    icon: [
+      { url: "/icon.png", type: "image/png" },
+      { url: "/favicon.ico" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", type: "image/png" },
+    ],
   },
 };
 

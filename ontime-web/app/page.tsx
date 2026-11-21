@@ -39,11 +39,11 @@ export default function HomePage() {
         {/* Verified Past Work & Case Studies with Interactive Multi-Image Carousels */}
         <PastWork />
 
+        {/* Step-by-Step Workflow (How On Time Delivers Flawless Property Care) */}
+        <ProcessSection />
+
         {/* Why Choose Us Feature Grid */}
         <FeatureGrid />
-
-        {/* Step-by-Step Workflow */}
-        <ProcessSection />
 
         {/* Verified Proof Gallery */}
         <GallerySection />

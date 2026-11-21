@@ -21,16 +21,18 @@ export function HeroNav() {
 
   return (
     <>
-      <div className="flex items-center justify-between lg:justify-start lg:gap-10">
-        <BrandLogo />
+      <div className="flex items-center justify-between lg:justify-start gap-4 xl:gap-8">
+        <div className="shrink-0">
+          <BrandLogo />
+        </div>
 
-        {/* Desktop links (first 4 only, to keep the row as clean as the reference) */}
-        <nav aria-label="Primary" className="hidden lg:flex items-center gap-7">
-          {navLinks.slice(0, 4).map((link) => (
+        {/* Desktop links */}
+        <nav aria-label="Primary" className="hidden lg:flex items-center gap-3.5 xl:gap-6 whitespace-nowrap">
+          {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="text-sm font-medium text-slate-600 hover:text-sky-600 transition-colors"
+              className="text-xs xl:text-sm font-semibold text-slate-600 hover:text-sky-600 transition-colors whitespace-nowrap"
             >
               {link.name}
             </a>
@@ -47,7 +49,7 @@ export function HeroNav() {
           }}
           aria-label="Open menu"
           aria-expanded={open}
-          className="lg:hidden relative z-20 w-11 h-11 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-800 shadow-xs active:scale-95 transition-transform cursor-pointer"
+          className="lg:hidden relative z-20 w-11 h-11 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-800 shadow-xs active:scale-95 transition-transform cursor-pointer shrink-0"
         >
           <Menu className="w-5 h-5 pointer-events-none" />
         </button>

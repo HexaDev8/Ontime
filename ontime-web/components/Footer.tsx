@@ -13,6 +13,7 @@ import {
   Phone,
   Mail,
 } from "lucide-react";
+import { navLinks } from "./navigation";
 
 export const Footer: React.FC = () => {
   return (
@@ -55,75 +56,28 @@ export const Footer: React.FC = () => {
               Core Services
             </h4>
             <ul className="space-y-2 text-sm text-slate-400">
-              <li>
-                <a href="#services" className="hover:text-sky-400 transition-colors">
-                  Office Deep Cleaning
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="hover:text-sky-400 transition-colors">
-                  House & Villa Sanitization
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="hover:text-sky-400 transition-colors">
-                  Student Apartment Turnover
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="hover:text-sky-400 transition-colors">
-                  Wiring Repairs & Breakers
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="hover:text-sky-400 transition-colors">
-                  Bulb & Lighting Installations
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="hover:text-sky-400 transition-colors">
-                  Plumbing Leak Repairs
-                </a>
-              </li>
+              <li className="hover:text-sky-400 transition-colors cursor-default">Office Deep Cleaning</li>
+              <li className="hover:text-sky-400 transition-colors cursor-default">House & Villa Sanitization</li>
+              <li className="hover:text-sky-400 transition-colors cursor-default">Student Apartment Turnover</li>
+              <li className="hover:text-sky-400 transition-colors cursor-default">Wiring Repairs & Breakers</li>
+              <li className="hover:text-sky-400 transition-colors cursor-default">Bulb & Lighting Installations</li>
+              <li className="hover:text-sky-400 transition-colors cursor-default">Plumbing Leak Repairs</li>
             </ul>
           </div>
 
-          {/* Equipment Installations */}
+          {/* Quick Links (from Navigation) */}
           <div className="space-y-3">
             <h4 className="text-sm font-bold text-white uppercase tracking-wider">
-              Appliance Setup
+              Quick Links
             </h4>
             <ul className="space-y-2 text-sm text-slate-400">
-              <li>
-                <a href="#services" className="hover:text-sky-400 transition-colors">
-                  Washing Machine Connections
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="hover:text-sky-400 transition-colors">
-                  Microwave & Oven Fitouts
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="hover:text-sky-400 transition-colors">
-                  Wall Mounted TVs & Audio
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="hover:text-sky-400 transition-colors">
-                  Appliance Safety Checks
-                </a>
-              </li>
-              <li>
-                <a href="#gallery" className="hover:text-sky-400 transition-colors">
-                  Project Gallery
-                </a>
-              </li>
-              <li>
-                <a href="#faq" className="hover:text-sky-400 transition-colors">
-                  Service FAQs
-                </a>
-              </li>
+              {navLinks.map((link) => (
+                <li key={link.name}>
+                  <a href={link.href} className="hover:text-sky-400 transition-colors">
+                    {link.name}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -162,17 +116,9 @@ export const Footer: React.FC = () => {
           <p>
             © 2026 On Time Private Limited. All rights reserved.
           </p>
-          <div className="flex items-center gap-6">
-            <a href="#privacy" className="hover:text-slate-400 transition-colors">
-              Privacy Policy
-            </a>
-            <a href="#terms" className="hover:text-slate-400 transition-colors">
-              Terms of Service
-            </a>
-            <a href="#faq" className="hover:text-slate-400 transition-colors">
-              Security & Guarantee
-            </a>
-          </div>
+          <p className="text-slate-400 font-medium">
+            Designed by <span className="text-sky-400 font-semibold">hexadevsolutions</span>
+          </p>
         </div>
       </div>
     </footer>

@@ -41,6 +41,22 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
     };
   }, [open, onClose]);
 
+  const handleNavClick = (href: string) => {
+    onClose();
+    if (href.startsWith("#")) {
+      // Allow overflow:hidden cleanup to apply, then scroll to section smoothly
+      setTimeout(() => {
+        const id = href.replace("#", "");
+        const target = document.getElementById(id);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth" });
+        } else {
+          window.location.hash = href;
+        }
+      }, 50);
+    }
+  };
+
   if (!open || !mounted) return null;
 
   return createPortal(
@@ -72,7 +88,12 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
             <a
               key={link.name}
               href={link.href}
-              onClick={onClose}
+              onClick={(e) => {
+                if (link.href.startsWith("#")) {
+                  e.preventDefault();
+                }
+                handleNavClick(link.href);
+              }}
               className="px-4 py-3 rounded-2xl text-base font-semibold text-slate-800 hover:bg-sky-50 hover:text-sky-600 transition-colors"
             >
               {link.name}
@@ -89,7 +110,10 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
           </a>
           <a
             href="#contact"
-            onClick={onClose}
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick("#contact");
+            }}
             className="inline-flex items-center justify-center gap-1.5 rounded-full bg-sky-500 py-3 text-sm font-bold text-white shadow-md shadow-sky-500/25"
           >
             Book Now <ArrowUpRight className="w-4 h-4" />
