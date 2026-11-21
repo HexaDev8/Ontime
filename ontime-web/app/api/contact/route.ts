@@ -45,14 +45,14 @@ export async function POST(request: Request) {
     // UK Phone Number validation
     if (!isValidUKPhoneNumber(phone)) {
       return NextResponse.json(
-        { error: "Please provide a valid UK phone number (e.g., +44 7438 463543 or 07438 463543)." },
+        { error: "Please provide a valid UK phone number (e.g., +44 7438 463543." },
         { status: 400 }
       );
     }
 
-    const gmailUser = process.env.GMAIL_USER || "venurakaranasinghe@gmail.com";
-    const gmailPass = process.env.GMAIL_APP_PASSWORD || "ulaekoimeksfzvxl";
-    const recipientEmail = process.env.RECIPIENT_EMAIL || "venurakaranasinghe@gmail.com";
+    const gmailUser = process.env.GMAIL_USER;
+    const gmailPass = process.env.GMAIL_APP_PASSWORD;
+    const recipientEmail = process.env.RECIPIENT_EMAIL;
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
