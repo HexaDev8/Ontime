@@ -35,6 +35,11 @@ export function BrandLogo({ showTagline = false }: BrandLogoProps) {
         <span className="font-extrabold text-base sm:text-lg tracking-tight text-slate-900">
           On Time<span className="text-sky-500">.</span>
         </span>
+        {showTagline && (
+          <span className="mt-1 text-xs font-medium text-slate-500">
+            Property Care Pvt Ltd
+          </span>
+        )}
       </span>
     </Link>
   );

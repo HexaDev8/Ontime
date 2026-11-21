@@ -24,10 +24,10 @@
 
 import type { CSSProperties } from "react";
 import { Sparkles, Zap, Tv, WashingMachine, CalendarCheck, Check } from "lucide-react";
-import { HeroNav } from "./hero/HeroNav";
-import { HeroSearch } from "./hero/HeroSearch";
-import { HeroTopicTags } from "./hero/HeroTopicTags";
-import { HeroCarousel, type HeroSlide } from "./hero/HeroCarousel";
+import { HeroNav } from "./HeroNav";
+import { HeroSearch } from "./HeroSearch";
+import { HeroTopicTags } from "./HeroTopicTags";
+import { HeroCarousel, type HeroSlide } from "./HeroCarousel";
 
 /** Real On Time job photos shown in the hero card. */
 const slides: HeroSlide[] = [
@@ -162,24 +162,7 @@ export function HeroSection() {
             >
               A Simplified Way to Keep Your{" "}
               <span className="text-sky-500">Property Spotless.</span>
-              {/* Inline avatar stack (decorative) */}
-              <span aria-hidden="true" className="ml-3 hidden -space-x-2 align-middle lg:inline-flex">
-                {[
-                  ["DP", "bg-sky-500"],
-                  ["RW", "bg-cyan-500"],
-                  ["MF", "bg-slate-800"],
-                ].map(([initials, bg]) => (
-                  <span
-                    key={initials}
-                    className={`inline-flex w-9 h-9 items-center justify-center rounded-full ring-2 ring-white text-xs font-bold text-white ${bg}`}
-                  >
-                    {initials}
-                  </span>
-                ))}
-                <span className="inline-flex w-9 h-9 items-center justify-center rounded-full ring-2 ring-white bg-white text-xs font-bold text-slate-600 border border-slate-200">
-                  2k+
-                </span>
-              </span>
+
             </h1>
 
             {/* Supporting copy (GEO-friendly plain-language summary) */}

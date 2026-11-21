@@ -8,7 +8,7 @@
 
 import React from "react";
 import { Navbar } from "@/components/Navbar";
-import { HeroSection } from "@/components/HeroSection";
+import { HeroSection } from "@/components/hero/HeroSection";
 import { BentoSection } from "@/components/BentoSection";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ServiceCard, ServiceItem } from "@/components/ServiceCard";
