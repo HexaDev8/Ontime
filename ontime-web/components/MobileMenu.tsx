@@ -10,7 +10,8 @@
 
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { X, PhoneCall, ArrowUpRight } from "lucide-react";
 import { navLinks, PHONE_HREF } from "./navigation";
 import { BrandLogo } from "./BrandLogo";
@@ -21,6 +22,12 @@ interface MobileMenuProps {
 }
 
 export function MobileMenu({ open, onClose }: MobileMenuProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // Close on Escape and lock page scroll while the menu is open.
   useEffect(() => {
     if (!open) return;
@@ -34,29 +41,29 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
     };
   }, [open, onClose]);
 
-  if (!open) return null;
+  if (!open || !mounted) return null;
 
-  return (
-    <div className="fixed inset-0 z-[60] lg:hidden" role="dialog" aria-modal="true" aria-label="Site menu">
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] lg:hidden" role="dialog" aria-modal="true" aria-label="Site menu">
       {/* Dimmed backdrop */}
       <button
         type="button"
         aria-label="Close menu"
         onClick={onClose}
-        className="absolute inset-0 bg-slate-900/30 backdrop-blur-sm"
+        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm cursor-pointer"
       />
 
       {/* Panel */}
-      <div className="absolute top-3 left-3 right-3 rounded-[2rem] bg-white p-5 shadow-2xl border border-slate-100">
+      <div className="relative z-10 m-3 rounded-[2rem] bg-white p-5 shadow-2xl border border-slate-100">
         <div className="flex items-center justify-between pb-4 border-b border-slate-100">
           <BrandLogo showTagline />
           <button
             type="button"
             onClick={onClose}
             aria-label="Close menu"
-            className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-700 hover:bg-slate-50"
+            className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-700 hover:bg-slate-50 cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5 pointer-events-none" />
           </button>
         </div>
 
@@ -89,6 +96,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
           </a>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

@@ -89,18 +89,50 @@ export function HeroSection() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:grid-rows-[auto_1fr] lg:gap-x-12 lg:gap-y-0">
-          {/* ── 1. In-hero navigation (row 1, left) ───────────────────── */}
+          {/* ── 1. In-hero navigation (row 1, left on desktop) ──────── */}
           <div className="lg:col-span-6 lg:row-start-1 lg:pt-3">
             <HeroNav />
           </div>
 
-          {/* ── 2. Photo card (spans both rows, right) ────────────────── */}
-          <div className="relative lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-1">
-            <div className="hero-photo-frame relative min-h-96">
+          {/* ── 2. Copy column ────────────────────────────────────────── */}
+          <div className="flex flex-col pt-4 sm:pt-6 lg:col-span-6 lg:row-start-2 lg:pt-0 lg:pb-2">
+            {/* Small eyebrow label */}
+            <p className="text-xs sm:text-sm font-semibold tracking-wide uppercase text-sky-500 lg:mt-auto">
+              Property Care Experts
+            </p>
+
+            {/* Main Headline */}
+            <h1
+              id="hero-title"
+              className="mt-2 text-3xl font-extrabold leading-[1.12] tracking-tight text-slate-900 sm:text-4xl md:text-5xl xl:text-[3.5rem]"
+            >
+              A Simplified Way to Keep Your{" "}
+              <span className="text-sky-500">Property Spotless.</span>
+            </h1>
+
+            {/* Supporting copy */}
+            <p className="mt-3 sm:mt-4 max-w-lg text-sm sm:text-base leading-relaxed text-slate-500">
+              Book cleaning, electrical, plumbing and appliance installation with On Time
+              Private Limited — certified crews that arrive exactly when promised. That&apos;s it.
+            </p>
+
+            {/* Call to action button */}
+            <div className="mt-5 sm:mt-6 lg:mt-7">
+              <HeroButton />
+            </div>
+
+            {/* Topic tags (Cleaning, Electrical, Plumbing, Installation) */}
+            <div className="mt-6 sm:mt-8 lg:mt-auto">
+              <HeroTopicTags />
+            </div>
+          </div>
+
+          {/* ── 3. Photo card column (spans both rows on desktop) ──────── */}
+          <div className="relative mt-2 lg:mt-0 lg:col-span-6 lg:col-start-7 lg:row-span-2 lg:row-start-1">
+            <div className="hero-photo-frame relative">
               <HeroCarousel slides={slides} />
 
-              {/* Notch with "Book Now" CTA (desktop). Two `.notch-fillet`
-                  spans create the smooth inverted corners. */}
+              {/* Notch with "Book Now" CTA (desktop) */}
               <div className="absolute top-0 right-0 z-20 hidden lg:block rounded-bl-[1.75rem] bg-[var(--hero-bg)] pb-3 pl-3">
                 <a
                   href="#contact"
@@ -112,7 +144,7 @@ export function HeroSection() {
                 <span aria-hidden="true" className="notch-fillet absolute -bottom-6 right-0" />
               </div>
 
-              {/* Floating "Quick Dispatch" card — overlaps the photo's left edge (desktop) */}
+              {/* Floating "Service Process" card (desktop only) */}
               <div className="absolute top-[20%] -left-12 z-10 hidden w-64 rounded-2xl bg-white/95 backdrop-blur-md p-4 shadow-xl shadow-slate-900/10 border border-slate-100 lg:block">
                 <p className="text-xs font-bold text-slate-900 tracking-tight pb-2.5 mb-2.5 border-b border-slate-100">
                   Service Process
@@ -134,50 +166,33 @@ export function HeroSection() {
 
               {/* Floating trust card — positioned on the right side of the photo (desktop) */}
               <TrustCard className="absolute top-[58%] -right-10 z-10 hidden lg:block" />
-
-              {/* Mobile: headline overlaid on the photo (visual only; the real
-                  <h1> below stays in the DOM for SEO / screen readers). */}
-              <p
-                aria-hidden="true"
-                className="absolute inset-x-4 min-[400px]:inset-x-6 bottom-14 text-center text-[1.75rem] min-[400px]:text-[2rem] sm:text-4xl md:text-5xl font-extrabold leading-[1.1] tracking-tight text-white lg:hidden"
-              >
-                A Simplified Way to Keep Your Property Spotless.
-              </p>
-
-              {/* Mobile: trust card overlapping the bottom edge */}
-              <TrustCard className="absolute left-1/2 bottom-0 z-10 w-max -translate-x-1/2 translate-y-1/2 lg:hidden" />
-            </div>
-          </div>
-
-          {/* ── 3. Copy column (row 2, left) ──────────────────────────── */}
-          <div className="flex flex-col pt-10 lg:col-span-6 lg:row-start-2 lg:pt-0 lg:pb-2">
-            {/* Small label */}
-            <p className="hidden text-sm font-semibold text-sky-500 lg:mt-auto lg:block">
-              Property Care Experts
-            </p>
-
-            {/* Headline — screen-reader only on mobile (the overlay shows it visually) */}
-            <h1
-              id="hero-title"
-              className="sr-only lg:not-sr-only lg:mt-3 lg:text-5xl xl:text-[3.5rem] lg:font-extrabold lg:leading-[1.12] lg:tracking-tight lg:text-slate-900"
-            >
-              A Simplified Way to Keep Your{" "}
-              <span className="text-sky-500">Property Spotless.</span>
-            </h1>
-
-            {/* Supporting copy (GEO-friendly plain-language summary) */}
-            <p className="order-2 mt-5 max-w-lg text-sm leading-relaxed text-slate-500 lg:order-none lg:mt-5 lg:text-base">
-              Book cleaning, electrical, plumbing and appliance installation with On Time
-              Private Limited — certified crews that arrive exactly when promised. That&apos;s it.
-            </p>
-
-            {/* Call to action button */}
-            <div className="order-3 mt-5 lg:order-none lg:mt-7">
-              <HeroButton />
             </div>
 
-            {/* Topic tags — first under the photo on mobile, bottom-left on desktop */}
-            <HeroTopicTags />
+            {/* Mobile / Tablet: Service Process & Trust Cards */}
+            <div className="mt-4 flex flex-col gap-3 lg:hidden">
+              {/* Service Process on Mobile / Tablet */}
+              <div className="rounded-2xl bg-white/95 backdrop-blur-md p-4 shadow-xl shadow-slate-900/10 border border-slate-100">
+                <p className="text-xs font-bold text-slate-900 tracking-tight pb-2.5 mb-2.5 border-b border-slate-100">
+                  Service Process
+                </p>
+                <ul className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {dispatchSteps.map(({ icon: Icon, title, subtitle, tone }) => (
+                    <li key={title} className="flex items-center gap-2.5 min-w-0">
+                      <span className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${tone}`}>
+                        <Icon className="w-4 h-4" />
+                      </span>
+                      <div className="leading-tight min-w-0">
+                        <p className="text-xs font-semibold text-slate-800 truncate">{title}</p>
+                        <p className="text-[11px] text-slate-400 truncate mt-0.5">{subtitle}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Trust Card */}
+              <TrustCard className="w-full" />
+            </div>
           </div>
         </div>
       </div>

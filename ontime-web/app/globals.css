@@ -52,11 +52,11 @@ body {
  * Defined directly in globals.css so it never depends on JIT arbitrary class scanning.
  */
 .hero-photo-frame {
-  height: 27.5rem;
+  height: 22rem;
 }
 @media (min-width: 640px) {
   .hero-photo-frame {
-    height: 32.5rem;
+    height: 25rem;
   }
 }
 @media (min-width: 1024px) {

@@ -41,11 +41,15 @@ export function HeroNav() {
         <button
           type="button"
           onClick={() => setOpen(true)}
+          onTouchEnd={(e) => {
+            e.preventDefault();
+            setOpen(true);
+          }}
           aria-label="Open menu"
           aria-expanded={open}
-          className="lg:hidden w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-800 shadow-xs"
+          className="lg:hidden relative z-20 w-11 h-11 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-800 shadow-xs active:scale-95 transition-transform cursor-pointer"
         >
-          <Menu className="w-5 h-5" />
+          <Menu className="w-5 h-5 pointer-events-none" />
         </button>
       </div>
 

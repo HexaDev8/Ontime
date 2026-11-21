@@ -86,6 +86,29 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={jakarta.variable}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('scrollRestoration' in history) {
+                history.scrollRestoration = 'manual';
+              }
+              // Immediately reset scroll position before browser renders
+              window.scrollTo(0, 0);
+              // Clean any URL hash from previous button clicks on fresh load/reload
+              if (window.location.hash) {
+                history.replaceState(null, '', window.location.pathname);
+              }
+              window.addEventListener('pageshow', function() {
+                window.scrollTo(0, 0);
+              });
+              window.addEventListener('load', function() {
+                window.scrollTo(0, 0);
+              });
+            `,
+          }}
+        />
+      </head>
       <body className="antialiased bg-slate-50 text-slate-900 min-h-screen flex flex-col">
         {children}
       </body>

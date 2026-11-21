@@ -42,68 +42,67 @@ export function Navbar() {
 
   return (
     <>
-      <header
-        inert={!visible}
-        className={`fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-4 transition-all duration-500 ease-out ${
-          visible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0 pointer-events-none"
-        }`}
-      >
-        <nav
-          aria-label="Main navigation"
-          className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-white/80 bg-white/90 py-2 pl-3 pr-2 shadow-xl shadow-slate-900/10 ring-1 ring-slate-900/5 backdrop-blur-xl sm:pl-4"
+      {visible && (
+        <header
+          className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-6 sm:pt-4 transition-all duration-500 ease-out translate-y-0 opacity-100"
         >
-          <BrandLogo />
+          <nav
+            aria-label="Main navigation"
+            className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-white/80 bg-white/90 py-2 pl-3 pr-2 shadow-xl shadow-slate-900/10 ring-1 ring-slate-900/5 backdrop-blur-xl sm:pl-4"
+          >
+            <BrandLogo />
 
-          {/* Desktop links */}
-          <div className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
+            {/* Desktop links */}
+            <div className="hidden lg:flex items-center gap-1">
+              {navLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="rounded-full px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-sky-50 hover:text-sky-600 transition-colors"
+                >
+                  {link.name}
+                </a>
+              ))}
+            </div>
+
+            {/* Desktop actions */}
+            <div className="hidden lg:flex items-center gap-1.5">
               <a
-                key={link.name}
-                href={link.href}
-                className="rounded-full px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-sky-50 hover:text-sky-600 transition-colors"
+                href={PHONE_HREF}
+                aria-label="Call On Time"
+                className="w-10 h-10 rounded-full flex items-center justify-center text-sky-600 hover:bg-sky-50 transition-colors"
               >
-                {link.name}
+                <PhoneCall className="w-4 h-4" />
               </a>
-            ))}
-          </div>
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-1.5 rounded-full bg-sky-500 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-sky-500/25 hover:bg-sky-600 transition-colors"
+              >
+                Book Now <ArrowUpRight className="w-4 h-4" />
+              </a>
+            </div>
 
-          {/* Desktop actions */}
-          <div className="hidden lg:flex items-center gap-1.5">
-            <a
-              href={PHONE_HREF}
-              aria-label="Call On Time"
-              className="w-10 h-10 rounded-full flex items-center justify-center text-sky-600 hover:bg-sky-50 transition-colors"
-            >
-              <PhoneCall className="w-4 h-4" />
-            </a>
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-1.5 rounded-full bg-sky-500 px-5 py-2.5 text-sm font-bold text-white shadow-md shadow-sky-500/25 hover:bg-sky-600 transition-colors"
-            >
-              Book Now <ArrowUpRight className="w-4 h-4" />
-            </a>
-          </div>
-
-          {/* Mobile actions */}
-          <div className="flex items-center gap-1.5 lg:hidden">
-            <a
-              href="#contact"
-              className="rounded-full bg-sky-500 px-4 py-2 text-xs font-bold text-white shadow-sm"
-            >
-              Book
-            </a>
-            <button
-              type="button"
-              onClick={() => setMenuOpen(true)}
-              aria-label="Open menu"
-              aria-expanded={menuOpen}
-              className="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-800"
-            >
-              <Menu className="w-5 h-5" />
-            </button>
-          </div>
-        </nav>
-      </header>
+            {/* Mobile actions */}
+            <div className="flex items-center gap-1.5 lg:hidden">
+              <a
+                href="#contact"
+                className="rounded-full bg-sky-500 px-4 py-2 text-xs font-bold text-white shadow-sm"
+              >
+                Book
+              </a>
+              <button
+                type="button"
+                onClick={() => setMenuOpen(true)}
+                aria-label="Open menu"
+                aria-expanded={menuOpen}
+                className="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-800"
+              >
+                <Menu className="w-5 h-5 pointer-events-none" />
+              </button>
+            </div>
+          </nav>
+        </header>
+      )}
 
       <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
     </>
