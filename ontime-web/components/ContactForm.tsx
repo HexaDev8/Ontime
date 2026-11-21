@@ -16,7 +16,26 @@ import {
   Mail,
   Clock,
   Sparkles,
+  MapPin,
+  Compass,
 } from "lucide-react";
+
+// UK Phone number regex matching landlines, mobiles, and UK international dial code
+// Examples: +44 7438 463543, 07438463543, 023 8012 3456, +44 20 7946 0991
+const isValidUKPhoneNumber = (phone: string): boolean => {
+  const cleaned = phone.replace(/[\s()-]/g, "");
+  return /^(?:(?:\+44|0044)[1-9]\d{9}|0[12378]\d{9})$/.test(cleaned);
+};
+
+// Check if selected time is within working hours (09:00 - 17:00)
+const isWithinWorkingHours = (timeStr: string): boolean => {
+  if (!timeStr) return false;
+  const [hours, minutes] = timeStr.split(":").map(Number);
+  if (isNaN(hours) || isNaN(minutes)) return false;
+  const totalMinutes = hours * 60 + minutes;
+  // 09:00 is 540 min, 17:00 is 1020 min
+  return totalMinutes >= 9 * 60 && totalMinutes <= 17 * 60;
+};
 
 export const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -27,10 +46,12 @@ export const ContactForm: React.FC = () => {
     serviceCategory: "Professional Cleaning",
     details: "",
     preferredDate: "",
+    preferredTime: "",
   });
 
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [highlightService, setHighlightService] = useState(false);
   const selectRef = useRef<HTMLSelectElement>(null);
 
@@ -44,9 +65,6 @@ export const ContactForm: React.FC = () => {
           serviceCategory: customEvent.detail.category,
         }));
         setHighlightService(true);
-        if (selectRef.current) {
-          selectRef.current.focus();
-        }
         setTimeout(() => setHighlightService(false), 2400);
       }
     };
@@ -57,14 +75,63 @@ export const ContactForm: React.FC = () => {
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage("");
+
+    // Validate that all fields are filled
+    if (
+      !formData.fullName.trim() ||
+      !formData.phone.trim() ||
+      !formData.email.trim() ||
+      !formData.preferredDate.trim() ||
+      !formData.preferredTime.trim() ||
+      !formData.serviceCategory.trim() ||
+      !formData.propertyType.trim() ||
+      !formData.details.trim()
+    ) {
+      setErrorMessage("Please fill in all fields before submitting.");
+      return;
+    }
+
+    // Validate UK Phone number
+    if (!isValidUKPhoneNumber(formData.phone)) {
+      setErrorMessage("Please enter a valid UK phone number (e.g. +44 7438 463543).");
+      return;
+    }
+
+    // Validate Preferred Time is within working hours (9:00 AM – 5:00 PM)
+    if (!isWithinWorkingHours(formData.preferredTime)) {
+      setErrorMessage("Please choose a time within our operating hours (Monday to Saturday: 9:00 AM – 5:00 PM).");
+      return;
+    }
+
     setSubmitting(true);
-    // Simulate instantaneous, reliable server action submission
-    setTimeout(() => {
-      setSubmitting(false);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok) {
+        throw new Error(data?.error || "Unable to send request right now. Please call our direct hotline.");
+      }
+
       setSubmitted(true);
-    }, 700);
+    } catch (err: unknown) {
+      console.error(err);
+      if (err instanceof Error && err.message) {
+        setErrorMessage(err.message);
+      } else {
+        setErrorMessage("Something went wrong. Please check your details or call our hotline.");
+      }
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -96,48 +163,64 @@ export const ContactForm: React.FC = () => {
               and dispatch certified technicians with guaranteed punctuality.
             </p>
 
-            <div className="space-y-4 pt-2">
+            <div className="space-y-3.5 pt-2">
+              {/* 1. Phone Hotline */}
               <div className="flex items-start gap-3.5 p-4 rounded-xl bg-white border border-slate-200/80 shadow-xs">
                 <div className="w-10 h-10 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
                   <h4 className="text-xs font-bold text-slate-400 uppercase">Direct Booking Hotline</h4>
-                  <a href="tel:+94770000000" className="text-base font-bold text-slate-900 hover:text-sky-600">
-                    +94 (77) 000-0000 / +94 (11) 200-0000
+                  <a href="tel:+447438463543" className="text-base font-bold text-slate-900 hover:text-sky-600">
+                    +44 7438 463543
                   </a>
-                  <p className="text-xs text-slate-500">Available 7 days a week, 7:00 AM – 8:00 PM</p>
+                  <p className="text-xs text-slate-500">Quick dispatch & emergency assistance</p>
                 </div>
               </div>
 
+              {/* 2. Email Dispatch */}
               <div className="flex items-start gap-3.5 p-4 rounded-xl bg-white border border-slate-200/80 shadow-xs">
                 <div className="w-10 h-10 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
                   <h4 className="text-xs font-bold text-slate-400 uppercase">Email Dispatch</h4>
-                  <a href="mailto:service@ontimelimited.com" className="text-base font-bold text-slate-900 hover:text-sky-600 break-all">
-                    service@ontimelimited.com
+                  <a href="mailto:ontime.inf@yahoo.com" className="text-base font-bold text-slate-900 hover:text-sky-600 break-all">
+                    ontime.inf@yahoo.com
                   </a>
                   <p className="text-xs text-slate-500">Guaranteed reply within 30 minutes</p>
                 </div>
               </div>
 
+              {/* 3. Operating Hours */}
               <div className="flex items-start gap-3.5 p-4 rounded-xl bg-white border border-slate-200/80 shadow-xs">
                 <div className="w-10 h-10 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
                   <Clock className="w-5 h-5" />
                 </div>
                 <div>
                   <h4 className="text-xs font-bold text-slate-400 uppercase">Operating Hours</h4>
-                  <p className="text-sm font-semibold text-slate-800">Monday – Sunday: 7:00 AM - 8:00 PM</p>
-                  <p className="text-xs text-sky-600 font-medium">Emergency on-call crew available 24/7</p>
+                  <p className="text-sm font-semibold text-slate-800">Monday to Saturday: 9:00 AM – 5:00 PM</p>
+                  <p className="text-xs text-slate-500">Sunday: Closed (On-call emergencies)</p>
+                </div>
+              </div>
+
+
+              {/* 5. Service / Operating Areas */}
+              <div className="flex items-start gap-3.5 p-4 rounded-xl bg-white border border-slate-200/80 shadow-xs">
+                <div className="w-10 h-10 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+                  <MapPin className="w-5 h-5" />
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-slate-400 uppercase">Service & Operating Areas</h4>
+                  <p className="text-sm font-semibold text-slate-900">Southampton & Surrounding Districts</p>
+                  <p className="text-xs text-slate-500 ">Domestic, Commercial & Student Properties</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Right Column: Booking Form */}
-          <div className="lg:col-span-7">
+          <div id="booking-form" className="lg:col-span-7 scroll-mt-24">
             <div className="glass-panel p-6 sm:p-8 md:p-10 rounded-3xl border border-slate-200 shadow-xl bg-white/95">
               {submitted ? (
                 <div className="text-center py-10 space-y-4">
@@ -164,6 +247,7 @@ export const ContactForm: React.FC = () => {
                         serviceCategory: "Professional Cleaning",
                         details: "",
                         preferredDate: "",
+                        preferredTime: "",
                       });
                     }}
                     className="mt-4 px-6 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-600 text-white font-semibold text-sm transition-colors"
@@ -181,6 +265,14 @@ export const ContactForm: React.FC = () => {
                       <Sparkles className="w-3.5 h-3.5" /> Instant Review
                     </span>
                   </div>
+
+                  {/* Error Notification */}
+                  {errorMessage && (
+                    <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-start gap-2.5">
+                      <span className="font-bold text-red-500">Notice:</span>
+                      <span>{errorMessage}</span>
+                    </div>
+                  )}
 
                   {/* Name and Phone */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -204,7 +296,7 @@ export const ContactForm: React.FC = () => {
                       <input
                         type="tel"
                         required
-                        placeholder="e.g. +94 77 123 4567"
+                        placeholder="e.g. +44 7438 463543"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-sky-500 focus:ring-2 focus:ring-sky-100 text-sm text-slate-900 outline-hidden transition-all"
@@ -212,14 +304,15 @@ export const ContactForm: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Email & Date */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Email, Preferred Date & Preferred Time */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                       <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
-                        Email Address
+                        Email Address *
                       </label>
                       <input
                         type="email"
+                        required
                         placeholder="david@example.com"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -228,12 +321,32 @@ export const ContactForm: React.FC = () => {
                     </div>
                     <div>
                       <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
-                        Preferred Date
+                        Preferred Date *
                       </label>
                       <input
                         type="date"
+                        required
                         value={formData.preferredDate}
                         onChange={(e) => setFormData({ ...formData, preferredDate: e.target.value })}
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-sky-500 focus:ring-2 focus:ring-sky-100 text-sm text-slate-900 outline-hidden transition-all"
+                      />
+                    </div>
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="block text-xs font-bold text-slate-700 uppercase">
+                          Preferred Time *
+                        </label>
+                        <span className="text-[10px] font-semibold text-slate-400">
+                          9:00 AM – 5:00 PM
+                        </span>
+                      </div>
+                      <input
+                        type="time"
+                        required
+                        min="09:00"
+                        max="17:00"
+                        value={formData.preferredTime}
+                        onChange={(e) => setFormData({ ...formData, preferredTime: e.target.value })}
                         className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-sky-500 focus:ring-2 focus:ring-sky-100 text-sm text-slate-900 outline-hidden transition-all"
                       />
                     </div>
@@ -254,11 +367,10 @@ export const ContactForm: React.FC = () => {
                         ref={selectRef}
                         value={formData.serviceCategory}
                         onChange={(e) => setFormData({ ...formData, serviceCategory: e.target.value })}
-                        className={`w-full px-4 py-3 rounded-xl border text-sm text-slate-900 outline-hidden transition-all bg-white ${
-                          highlightService
-                            ? "border-sky-500 ring-4 ring-sky-200/80 shadow-md scale-[1.01]"
-                            : "border-slate-200 focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
-                        }`}
+                        className={`w-full px-4 py-3 rounded-xl border text-sm text-slate-900 outline-hidden transition-all bg-white ${highlightService
+                          ? "border-sky-500 ring-4 ring-sky-200/80 shadow-md scale-[1.01]"
+                          : "border-slate-200 focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+                          }`}
                       >
                         <option value="Professional Cleaning">1. Professional Cleaning (Domestic & Office)</option>
                         <option value="Air Conditioning Servicing">2. AC Servicing, Chemical Wash & Repair</option>
@@ -291,10 +403,11 @@ export const ContactForm: React.FC = () => {
                   {/* Notes / Details */}
                   <div>
                     <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
-                      Scope Details / Notes
+                      Scope Details / Notes *
                     </label>
                     <textarea
                       rows={3}
+                      required
                       placeholder="Describe what needs care (e.g., install 55-inch TV & washing machine, deep clean 3-bedroom flat, rewire trip switch...)"
                       value={formData.details}
                       onChange={(e) => setFormData({ ...formData, details: e.target.value })}

@@ -18,7 +18,7 @@ import { TestimonialSection } from "@/components/TestimonialSection";
 import { FaqSection } from "@/components/FaqSection";
 import { ContactForm } from "@/components/ContactForm";
 import { Footer } from "@/components/Footer";
-import { JsonLd } from "@/components/JsonLd";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 export default function HomePage() {
   return (

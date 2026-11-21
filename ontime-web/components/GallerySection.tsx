@@ -107,28 +107,7 @@ export const GallerySection: React.FC = () => {
           ))}
         </div>
 
-        {/* Assurance banner */}
-        <div className="mt-12 p-6 rounded-2xl bg-sky-50/80 border border-sky-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-sky-500 text-white flex items-center justify-center shrink-0">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <div>
-              <h4 className="text-sm font-bold text-slate-900">
-                All Work Fully Insured & Tested Prior to Handover
-              </h4>
-              <p className="text-xs text-slate-600">
-                We never leave a job site until appliances are operational and spaces are immaculate.
-              </p>
-            </div>
-          </div>
-          <a
-            href="#contact"
-            className="text-xs font-bold bg-sky-600 hover:bg-sky-700 text-white px-4 py-2.5 rounded-xl transition-colors whitespace-nowrap"
-          >
-            Request Inspection
-          </a>
-        </div>
+
       </div>
     </section>
   );

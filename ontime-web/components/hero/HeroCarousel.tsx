@@ -83,7 +83,14 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
         {/* Crew profile pill */}
         <div className="flex items-center gap-2 sm:gap-3 rounded-full bg-white/95 backdrop-blur-md py-1 px-1.5 sm:py-1.5 sm:pl-1.5 sm:pr-5 pr-3 shadow-lg max-w-[75%] sm:max-w-none">
           <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-sky-50 border border-sky-100 flex items-center justify-center shrink-0 overflow-hidden">
-            <Image src="/images/logo.png" alt="" width={30} height={30} className="object-contain w-3/4 h-auto" />
+            <Image
+              src="/images/logo.png"
+              alt=""
+              width={30}
+              height={30}
+              style={{ width: "75%", height: "auto" }}
+              className="object-contain"
+            />
           </span>
           <span className="leading-tight min-w-0">
             <span className="flex items-center gap-1 text-xs sm:text-sm font-bold text-slate-900 truncate">

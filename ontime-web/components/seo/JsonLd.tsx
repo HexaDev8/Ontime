@@ -1,12 +1,12 @@
 /**
- * @file app/components/JsonLd.tsx
+ * @file app/components/seo/JsonLd.tsx
  * @description JSON-LD structured schema markup for Search Engines,
  * Answer Engines (AEO), and Generative AI Overviews (GEO).
  * Integrates LocalBusiness, HomeAndConstructionBusiness, Service, and FAQPage schemas.
  */
 
 import React from "react";
-import { faqData } from "./faqData";
+import { faqData } from "@/components/faqData";
 
 export const JsonLd: React.FC = () => {
   // LocalBusiness & HomeAndConstructionBusiness Schema
@@ -22,11 +22,17 @@ export const JsonLd: React.FC = () => {
     image: "https://ontimelimited.com/images/services/cleaning-main.jpg",
     description:
       "On Time Private Limited provides prompt, certified property maintenance, professional cleaning for offices, houses, and student apartments, electrical wiring and plumbing repairs, and precision equipment installation.",
-    telephone: "+94-77-0000000",
-    email: "service@ontimelimited.com",
-    priceRange: "$$",
+    telephone: "+44-7438-463543",
+    email: "ontime.inf@yahoo.com",
+    priceRange: "££",
     paymentAccepted: ["Cash", "Credit Card", "Bank Transfer"],
-    currenciesAccepted: "LKR, USD",
+    currenciesAccepted: "GBP",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "29, Carlisle Road",
+      addressLocality: "Southampton",
+      addressCountry: "GB",
+    },
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
@@ -37,20 +43,15 @@ export const JsonLd: React.FC = () => {
           "Thursday",
           "Friday",
           "Saturday",
-          "Sunday",
         ],
-        opens: "07:00",
-        closes: "20:00",
+        opens: "09:00",
+        closes: "17:00",
       },
     ],
     areaServed: [
       {
-        "@type": "AdministrativeArea",
-        name: "Western Province",
-      },
-      {
         "@type": "City",
-        name: "Colombo",
+        name: "Southampton",
       },
     ],
     hasOfferCatalog: {

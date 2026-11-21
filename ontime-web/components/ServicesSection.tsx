@@ -54,10 +54,15 @@ export const ServicesSection: React.FC = () => {
         })
       );
 
-      // 2. Smoothly scroll to the booking form without altering the URL hash
-      const contactElement = document.getElementById("contact");
-      if (contactElement) {
-        contactElement.scrollIntoView({ behavior: "smooth" });
+      // 2. On mobile screens (< 1024px), scroll directly to the booking form box
+      // On desktop, scroll to the contact section overview
+      const isMobile = window.innerWidth < 1024;
+      const targetElement = isMobile
+        ? (document.getElementById("booking-form") || document.getElementById("contact"))
+        : document.getElementById("contact");
+
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: "smooth" });
       }
     }
   };
@@ -86,9 +91,12 @@ export const ServicesSection: React.FC = () => {
             />
 
             <div>
-              {/* Category pill */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-semibold uppercase tracking-wider mb-4 border border-white/25">
-                <Sparkles className="w-3.5 h-3.5" /> Professional Cleaning
+              <div className="flex items-center justify-between mb-4">
+                {/* Category pill */}
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-semibold uppercase tracking-wider border border-white/25">
+                  <Sparkles className="w-3.5 h-3.5" /> Professional Cleaning
+                </div>
+                <Sparkles className="w-5 h-5 text-white/80" />
               </div>
 
               {/* Title */}
@@ -215,8 +223,11 @@ export const ServicesSection: React.FC = () => {
             />
 
             <div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-semibold uppercase tracking-wider mb-4 border border-cyan-500/30">
-                <Wind className="w-3.5 h-3.5" /> AC & Climate Control
+              <div className="flex items-center justify-between mb-4">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-semibold uppercase tracking-wider border border-cyan-500/30">
+                  <Wind className="w-3.5 h-3.5" /> AC & Climate Control
+                </div>
+                <Wind className="w-5 h-5 text-cyan-400/80" />
               </div>
 
               <h3 className="text-xl sm:text-2xl font-bold leading-tight text-white">

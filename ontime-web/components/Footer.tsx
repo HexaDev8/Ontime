@@ -28,7 +28,8 @@ export const Footer: React.FC = () => {
                   alt="On Time Private Limited"
                   width={36}
                   height={36}
-                  className="object-contain w-[85%] h-auto"
+                  style={{ width: "85%", height: "auto" }}
+                  className="object-contain"
                 />
               </div>
               <span className="text-xl font-extrabold text-white tracking-tight">
@@ -134,15 +135,19 @@ export const Footer: React.FC = () => {
             <div className="space-y-2 text-sm text-slate-400">
               <p className="flex items-start gap-2">
                 <Phone className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
-                <span>+94 (77) 000-0000</span>
+                <a href="tel:+447438463543" className="hover:text-white transition-colors">
+                  +44 7438 463543
+                </a>
               </p>
               <p className="flex items-start gap-2">
                 <Mail className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
-                <span className="min-w-0 break-all">service@ontimelimited.com</span>
+                <a href="mailto:ontime.inf@yahoo.com" className="min-w-0 break-all hover:text-white transition-colors">
+                  ontime.inf@yahoo.com
+                </a>
               </p>
               <p className="flex items-start gap-2">
                 <Clock className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
-                <span>Mon - Sun: 7:00 AM - 8:00 PM</span>
+                <span>Mon - Sat: 9:00 AM - 5:00 PM</span>
               </p>
               <p className="flex items-start gap-2 text-xs text-slate-500 pt-1">
                 <ShieldCheck className="w-4 h-4 text-sky-400 shrink-0" />

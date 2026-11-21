@@ -21,5 +21,9 @@ export const navLinks: NavItem[] = [
 ];
 
 /** Hotline used in every "Call" button. Update once here. */
-export const PHONE_HREF = "tel:+94770000000";
-export const PHONE_DISPLAY = "+94 (77) 000-0000";
+export const PHONE_HREF = "tel:+447438463543";
+export const PHONE_DISPLAY = "+44 7438 463543";
+export const EMAIL_ADDRESS = "ontime.inf@yahoo.com";
+export const ADDRESS_TEXT = "29, Carlisle Road, Southampton";
+export const SERVICE_AREA = "Southampton";
+export const WORKING_HOURS = "Monday to Saturday 9am to 5pm";

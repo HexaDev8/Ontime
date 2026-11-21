@@ -18,54 +18,61 @@ import {
 } from "lucide-react";
 
 interface FeatureItem {
-  icon: React.ReactNode;
+  icon: (className?: string) => React.ReactNode;
   title: string;
   description: string;
   metric: string;
+  guaranteeText: string;
 }
 
 const features: FeatureItem[] = [
   {
-    icon: <Clock className="w-6 h-6 text-sky-500" />,
+    icon: (cls) => <Clock className={cls || "w-6 h-6 text-sky-500"} />,
     title: "Strict Punctuality Guarantee",
     description:
       "We value your busy calendar. Our technicians arrive precisely within the confirmed window, ready with all tools and materials to complete the job on schedule.",
     metric: "99.8% On-Time",
+    guaranteeText: "On-time arrival or 10% fee credit",
   },
   {
-    icon: <ShieldCheck className="w-6 h-6 text-sky-500" />,
+    icon: (cls) => <ShieldCheck className={cls || "w-6 h-6 text-sky-500"} />,
     title: "Vetted & Insured Technicians",
     description:
       "Every cleaner, electrician, and installer undergoes background checks, skill tests, and comprehensive safety training before entering your property.",
     metric: "100% Vetted",
+    guaranteeText: "Fully insured & background verified crew",
   },
   {
-    icon: <Award className="w-6 h-6 text-sky-500" />,
+    icon: (cls) => <Award className={cls || "w-6 h-6 text-sky-500"} />,
     title: "Commercial & Domestic Mastery",
     description:
       "Whether you run a high-traffic corporate office or manage student apartments, we tailor our procedures and grade of equipment to your unique standards.",
     metric: "2,500+ Properties",
+    guaranteeText: "Tailored checklists per property type",
   },
   {
-    icon: <Zap className="w-6 h-6 text-sky-500" />,
+    icon: (cls) => <Zap className={cls || "w-6 h-6 text-sky-500"} />,
     title: "Fast Diagnostics & Fixes",
     description:
       "From complex wiring issues and tripping circuit breakers to stubborn pipe leaks, we diagnose root causes rapidly without unnecessary delays.",
     metric: "< 60 Min Response",
+    guaranteeText: "Rapid diagnosis with root-cause warranty",
   },
   {
-    icon: <Users2 className="w-6 h-6 text-sky-500" />,
+    icon: (cls) => <Users2 className={cls || "w-6 h-6 text-sky-500"} />,
     title: "Dedicated Account Coordination",
     description:
       "Direct line of communication with our operations desk for continuous oversight, scheduled audits, and streamlined multi-property invoicing.",
     metric: "24/7 Desk",
+    guaranteeText: "Single point of contact for all requests",
   },
   {
-    icon: <HeartHandshake className="w-6 h-6 text-sky-500" />,
+    icon: (cls) => <HeartHandshake className={cls || "w-6 h-6 text-sky-500"} />,
     title: "Clear, Upfront Pricing",
     description:
       "No hidden call-out fees or surprise overtime charges. You receive a fully itemized transparent estimate before work commences.",
     metric: "Zero Hidden Fees",
+    guaranteeText: "Written itemized quote before work begins",
   },
 ];
 
@@ -88,8 +95,8 @@ export const FeatureGrid: React.FC = () => {
             >
               <div>
                 <div className="flex items-center justify-between mb-5">
-                  <div className="w-12 h-12 rounded-xl bg-sky-50 border border-sky-100 flex items-center justify-center group-hover:scale-110 group-hover:bg-sky-500 group-hover:text-white transition-all duration-200">
-                    {feature.icon}
+                  <div className="w-12 h-12 rounded-xl bg-sky-50 border border-sky-100 flex items-center justify-center group-hover:scale-110 group-hover:bg-sky-500 group-hover:border-sky-500 transition-all duration-200">
+                    {feature.icon("w-6 h-6 text-sky-500 group-hover:text-white transition-colors duration-200")}
                   </div>
                   <span className="text-xs font-bold text-sky-700 bg-sky-50/80 px-2.5 py-1 rounded-full border border-sky-200/60">
                     {feature.metric}
@@ -106,8 +113,8 @@ export const FeatureGrid: React.FC = () => {
               </div>
 
               <div className="mt-6 pt-4 border-t border-slate-100 flex items-center gap-2 text-xs font-semibold text-slate-500">
-                <CheckCircle className="w-3.5 h-3.5 text-sky-500" />
-                <span>Standard with every appointment</span>
+                <CheckCircle className="w-3.5 h-3.5 text-sky-500 shrink-0" />
+                <span>{feature.guaranteeText}</span>
               </div>
             </div>
           ))}

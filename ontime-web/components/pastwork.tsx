@@ -334,10 +334,15 @@ const PastWorkCard: React.FC<PastWorkCardProps> = ({ service, reversed = false }
         })
       );
 
-      // 2. Smoothly scroll to the contact form without modifying the URL hash
-      const contactElement = document.getElementById("contact");
-      if (contactElement) {
-        contactElement.scrollIntoView({ behavior: "smooth" });
+      // 2. On mobile screens (< 1024px), scroll directly to the booking form box
+      // On desktop, scroll to the contact section overview
+      const isMobile = window.innerWidth < 1024;
+      const targetElement = isMobile
+        ? (document.getElementById("booking-form") || document.getElementById("contact"))
+        : document.getElementById("contact");
+
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: "smooth" });
       }
     }
   };

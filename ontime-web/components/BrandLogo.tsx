@@ -25,7 +25,8 @@ export function BrandLogo({ showTagline = false }: BrandLogoProps) {
           alt=""
           width={44}
           height={44}
-          className="object-contain w-[88%] h-auto"
+          style={{ width: "88%", height: "auto" }}
+          className="object-contain"
           priority
         />
       </span>

@@ -12,7 +12,10 @@ import { ArrowRight } from "lucide-react";
 export function HeroButton() {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    const target = document.getElementById("contact");
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 1024;
+    const target = isMobile
+      ? (document.getElementById("booking-form") || document.getElementById("contact"))
+      : document.getElementById("contact");
     if (target) {
       target.scrollIntoView({ behavior: "smooth" });
     }
