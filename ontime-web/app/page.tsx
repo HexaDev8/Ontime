@@ -9,7 +9,7 @@
 import React from "react";
 import { Navbar } from "@/components/Navbar";
 import { HeroSection } from "@/components/hero/HeroSection";
-import { BentoSection } from "@/components/BentoSection";
+import { ServicesSection } from "@/components/ServicesSection";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ServiceCard, ServiceItem } from "@/components/ServiceCard";
 import { FeatureGrid } from "@/components/FeatureGrid";
@@ -92,11 +92,11 @@ export default function HomePage() {
         {/* Hero Section (Asymmetric Minimalist Design with Search Pill & Floating Bento Overlays) */}
         <HeroSection />
 
-        {/* Bento Grid Showcase inspired by Modern Redesign Reference */}
-        <BentoSection />
+        {/* Services Showcase (formerly BentoSection) */}
+        <ServicesSection />
 
         {/* Core Services Breakdown */}
-        <section id="services" className="py-20 md:py-28 bg-slate-50/50 relative">
+        <section id="service-pillars" className="py-20 md:py-28 bg-slate-50/50 relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <SectionHeading
               badge="Our Core Pillars"

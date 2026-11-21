@@ -8,7 +8,7 @@
 
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Send,
   CheckCircle2,
@@ -31,6 +31,31 @@ export const ContactForm: React.FC = () => {
 
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [highlightService, setHighlightService] = useState(false);
+  const selectRef = useRef<HTMLSelectElement>(null);
+
+  // Listen for service selection events triggered from Services bento cards
+  useEffect(() => {
+    const handleServiceSelect = (event: Event) => {
+      const customEvent = event as CustomEvent<{ category: string }>;
+      if (customEvent.detail?.category) {
+        setFormData((prev) => ({
+          ...prev,
+          serviceCategory: customEvent.detail.category,
+        }));
+        setHighlightService(true);
+        if (selectRef.current) {
+          selectRef.current.focus();
+        }
+        setTimeout(() => setHighlightService(false), 2400);
+      }
+    };
+
+    window.addEventListener("ontime-select-service", handleServiceSelect);
+    return () => {
+      window.removeEventListener("ontime-select-service", handleServiceSelect);
+    };
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -217,18 +242,32 @@ export const ContactForm: React.FC = () => {
                   {/* Service & Property Type Selectors */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5">
-                        Service Required *
+                      <label className="block text-xs font-bold text-slate-700 uppercase mb-1.5 flex items-center justify-between">
+                        <span>Service Required *</span>
+                        {highlightService && (
+                          <span className="text-[11px] text-sky-600 font-bold animate-pulse">
+                            Selected from Services
+                          </span>
+                        )}
                       </label>
                       <select
+                        ref={selectRef}
                         value={formData.serviceCategory}
                         onChange={(e) => setFormData({ ...formData, serviceCategory: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-sky-500 focus:ring-2 focus:ring-sky-100 text-sm text-slate-900 outline-hidden transition-all bg-white"
+                        className={`w-full px-4 py-3 rounded-xl border text-sm text-slate-900 outline-hidden transition-all bg-white ${
+                          highlightService
+                            ? "border-sky-500 ring-4 ring-sky-200/80 shadow-md scale-[1.01]"
+                            : "border-slate-200 focus:border-sky-500 focus:ring-2 focus:ring-sky-100"
+                        }`}
                       >
-                        <option value="Professional Cleaning">1. Professional Cleaning</option>
-                        <option value="Plumbing & Electrical Services">2. Plumbing & Electrical Services</option>
-                        <option value="Equipment Installation">3. Equipment Installation</option>
-                        <option value="Combined Maintenance Package">Combined Property Package</option>
+                        <option value="Professional Cleaning">1. Professional Cleaning (Domestic & Office)</option>
+                        <option value="Air Conditioning Servicing">2. AC Servicing, Chemical Wash & Repair</option>
+                        <option value="Plumbing & Sanitary Works">3. Plumbing Works & Bathroom Fittings</option>
+                        <option value="Electrical Works & Repairs">4. Electrical Works & Safety Fixing</option>
+                        <option value="Appliance & Electronics Repair">5. Fridge, Washing Machine & Electronics Repair</option>
+                        <option value="Equipment & Appliance Setup">6. TV Mounting & Equipment Installation</option>
+                        <option value="Painting & Tile Repairing">7. Painting Works & Tile Repairs</option>
+                        <option value="Combined Maintenance Package">Combined Property Maintenance Package</option>
                       </select>
                     </div>
 
