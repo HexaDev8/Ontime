@@ -167,8 +167,8 @@ export const ContactForm: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-xs font-bold text-slate-400 uppercase">Email Dispatch</h4>
-                  <a href="mailto:ontime.inf@yahoo.com" className="text-base font-bold text-slate-900 hover:text-sky-600 break-all">
-                    ontime.inf@yahoo.com
+                  <a href="mailto:ontime.info@yahoo.com" className="text-base font-bold text-slate-900 hover:text-sky-600 break-all">
+                    ontime.info@yahoo.com
                   </a>
                   <p className="text-xs text-slate-500">Guaranteed reply within 30 minutes</p>
                 </div>

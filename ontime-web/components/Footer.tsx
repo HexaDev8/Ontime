@@ -96,7 +96,7 @@ export const Footer: React.FC = () => {
               <p className="flex items-start gap-2">
                 <Mail className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
                 <a href="mailto:ontime.inf@yahoo.com" className="min-w-0 break-all hover:text-white transition-colors">
-                  ontime.inf@yahoo.com
+                  ontime.info@yahoo.com
                 </a>
               </p>
               <p className="flex items-start gap-2">

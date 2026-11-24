@@ -128,7 +128,7 @@ ${details || "No additional notes provided"}
     `.trim();
 
     await transporter.sendMail({
-      from: `"On Time Booking Desk" <${gmailUser}>`,
+      from: `"OnTime Booking Form"`,
       to: recipientEmail,
       replyTo: email || undefined,
       subject: `New Booking Request: ${serviceCategory} - ${fullName}`,
