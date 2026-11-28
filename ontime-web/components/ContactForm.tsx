@@ -335,12 +335,13 @@ export const ContactForm: React.FC = () => {
                           }`}
                       >
                         <option value="Professional Cleaning">1. Professional Cleaning (Domestic & Office)</option>
-                        <option value="Air Conditioning Servicing">2. AC Servicing, Chemical Wash & Repair</option>
-                        <option value="Plumbing & Sanitary Works">3. Plumbing Works & Bathroom Fittings</option>
-                        <option value="Electrical Works & Repairs">4. Electrical Works & Safety Fixing</option>
-                        <option value="Appliance & Electronics Repair">5. Fridge, Washing Machine & Electronics Repair</option>
-                        <option value="Equipment & Appliance Setup">6. TV Mounting & Equipment Installation</option>
-                        <option value="Painting & Tile Repairing">7. Painting Works & Tile Repairs</option>
+                        <option value="Hotel Kitchen Exhaust & Grill Cleaning">2. Hotel Kitchen Exhaust & Flat Grill Cleaning</option>
+                        <option value="Air Conditioning Servicing">3. AC Servicing, Chemical Wash & Repair</option>
+                        <option value="Plumbing & Sanitary Works">4. Plumbing Works & Bathroom Fittings</option>
+                        <option value="Electrical Works & Repairs">5. Electrical Works & Safety Fixing</option>
+                        <option value="Appliance & Electronics Repair">6. Fridge, Washing Machine & Electronics Repair</option>
+                        <option value="Equipment & Appliance Setup">7. TV Mounting & Equipment Installation</option>
+                        <option value="Painting & Tile Repairing">8. Painting Works & Tile Repairs</option>
                         <option value="Combined Maintenance Package">Combined Property Maintenance Package</option>
                       </select>
                     </div>

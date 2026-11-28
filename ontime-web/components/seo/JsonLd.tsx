@@ -62,6 +62,15 @@ export const JsonLd: React.FC = () => {
           "@type": "Offer",
           itemOffered: {
             "@type": "Service",
+            name: "Hotel Kitchen Exhaust & Flat Grill Cleaning",
+            description:
+              "Commercial kitchen extraction system cleaning, ductwork degreasing with proper food-grade chemicals, and heavy carbon removal on flat cooking grills.",
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
             name: "Professional Cleaning Services",
             description:
               "Deep cleaning, sanitization, and turnover care for offices, private houses, homes, and student apartments.",
