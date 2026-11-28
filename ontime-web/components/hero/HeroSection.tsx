@@ -32,20 +32,21 @@ import { HeroCarousel, type HeroSlide } from "./HeroCarousel";
 /** Real On Time job photos shown in the hero card. */
 const slides: HeroSlide[] = [
   {
-    src: "/images/gallery/clean-3.jpg",
-    alt: "Living room after a full home deep clean by On Time Private Limited",
-    label: "Home Deep Cleaning",
+    src: "/images/hero/Rooftop AC Fixing.png",
+    alt: "Commercial rooftop condensing unit servicing",
+    label: "Commercial Refrigeration Service",
   },
   {
-    src: "/images/services/cleaning-main.jpg",
-    alt: "Freshly cleaned lounge and hardwood floor in a residential property",
-    label: "Living Space Care",
+    src: "/images/hero/Living Room Cleaning.jpeg",
+    alt: "Clean living room with freshly vacuumed sofas and wooden floor",
+    label: "Home Cleaning",
   },
   {
-    src: "/images/gallery/electric-1.jpg",
-    alt: "Wall-mounted television installed by an On Time technician",
-    label: "TV Wall Mounting",
+    src: "/images/hero/Display Fridge Repair.jpeg",
+    alt: "Commercial display fridge fan and cooling unit repair",
+    label: "Display Fridge Repair",
   },
+
 ];
 
 /** Fast dispatch & service progress steps. */

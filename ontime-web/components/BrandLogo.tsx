@@ -17,31 +17,15 @@ interface BrandLogoProps {
 
 export function BrandLogo({ showTagline = false }: BrandLogoProps) {
   return (
-    <Link href="/" className="flex items-center gap-3 group" aria-label="On Time Private Limited – Home">
-      {/* Logo mark inside a soft white circle */}
-      <span className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-white border border-slate-200/80 shadow-xs flex items-center justify-center overflow-hidden transition-transform duration-300 group-hover:scale-105">
-        <Image
-          src="/images/logo.png"
-          alt=""
-          width={44}
-          height={44}
-          style={{ width: "88%", height: "auto" }}
-          className="object-contain"
-          priority
-        />
-      </span>
-
-      {/* Wordmark */}
-      <span className="flex flex-col leading-none">
-        <span className="font-extrabold text-base sm:text-lg tracking-tight text-slate-900">
-          On Time<span className="text-sky-500">.</span>
-        </span>
-        {showTagline && (
-          <span className="mt-1 text-xs font-medium text-slate-500">
-            Property Care Pvt Ltd
-          </span>
-        )}
-      </span>
+    <Link href="/" className="flex items-center group" aria-label="On Time Private Limited – Home">
+      <Image
+        src="/images/logo.png"
+        alt="On Time Logo"
+        width={160}
+        height={56}
+        className="h-10 sm:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+        priority
+      />
     </Link>
   );
 }

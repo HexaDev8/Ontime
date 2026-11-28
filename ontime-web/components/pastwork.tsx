@@ -112,7 +112,7 @@ export const pastWorkData: PastWorkItem[] = [
     features: [
       "High-pressure coil wash & anti-fungal chemical cleaning",
       "Drain line suction clearing to stop dripping and water leaks",
-      "R32 / R410A eco-refrigerant pressure testing & gas top-up",
+      "R32,R410A,448A & 449A eco-refrigerant pressure testing & gas top-up",
       "Compressor performance diagnosis & thermostat calibration",
       "Inverter PCB circuit repairs & capacitor replacements",
       "Indoor split units, multi-split & commercial cassette maintenance",
@@ -352,9 +352,8 @@ const PastWorkCard: React.FC<PastWorkCardProps> = ({ service, reversed = false }
   return (
     <article
       id={service.id}
-      className={`glass-panel rounded-3xl p-6 sm:p-8 lg:p-10 border border-slate-200/90 shadow-md hover:shadow-xl transition-all duration-300 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white ${
-        reversed ? "lg:flex-row-reverse" : ""
-      }`}
+      className={`glass-panel rounded-3xl p-6 sm:p-8 lg:p-10 border border-slate-200/90 shadow-md hover:shadow-xl transition-all duration-300 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white ${reversed ? "lg:flex-row-reverse" : ""
+        }`}
     >
       {/* ── Content Column (7 cols) ── */}
       <div className={`space-y-6 lg:col-span-7 ${reversed ? "lg:order-2" : "lg:order-1"}`}>
@@ -470,11 +469,10 @@ const PastWorkCard: React.FC<PastWorkCardProps> = ({ service, reversed = false }
                     setCurrentImageIndex(i);
                   }}
                   aria-label={`Go to slide ${i + 1}`}
-                  className={`transition-all rounded-full cursor-pointer ${
-                    currentImageIndex === i
-                      ? "w-4 h-1.5 bg-sky-400"
-                      : "w-1.5 h-1.5 bg-white/60 hover:bg-white"
-                  }`}
+                  className={`transition-all rounded-full cursor-pointer ${currentImageIndex === i
+                    ? "w-4 h-1.5 bg-sky-400"
+                    : "w-1.5 h-1.5 bg-white/60 hover:bg-white"
+                    }`}
                 />
               ))}
               <span className="text-[10px] text-white/90 font-bold ml-1">

@@ -7,6 +7,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   ShieldCheck,
   Clock,
@@ -22,21 +23,15 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-800">
           {/* Brand & Purpose (2 cols) */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white p-1 flex items-center justify-center overflow-hidden">
-                <Image
-                  src="/images/logo.png"
-                  alt="On Time Private Limited"
-                  width={36}
-                  height={36}
-                  style={{ width: "85%", height: "auto" }}
-                  className="object-contain"
-                />
-              </div>
-              <span className="text-xl font-extrabold text-white tracking-tight">
-                ON TIME <span className="text-sky-400 font-semibold text-sm">Pvt Ltd</span>
-              </span>
-            </div>
+            <Link href="/" className="inline-flex items-center group" aria-label="On Time Private Limited – Home">
+              <Image
+                src="/images/logo.png"
+                alt="On Time Private Limited"
+                width={180}
+                height={64}
+                className="h-12 sm:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              />
+            </Link>
 
             <p className="text-sm text-slate-400 leading-relaxed max-w-sm">
               On Time Private Limited is a specialized property maintenance and technical care
@@ -95,7 +90,7 @@ export const Footer: React.FC = () => {
               </p>
               <p className="flex items-start gap-2">
                 <Mail className="w-4 h-4 text-sky-400 shrink-0 mt-0.5" />
-                <a href="mailto:ontime.inf@yahoo.com" className="min-w-0 break-all hover:text-white transition-colors">
+                <a href="mailto:ontime.info@yahoo.com" className="min-w-0 break-all hover:text-white transition-colors">
                   ontime.info@yahoo.com
                 </a>
               </p>

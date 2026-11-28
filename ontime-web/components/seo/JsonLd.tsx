@@ -23,7 +23,7 @@ export const JsonLd: React.FC = () => {
     description:
       "On Time Private Limited provides prompt, certified property maintenance, professional cleaning for offices, houses, and student apartments, electrical wiring and plumbing repairs, and precision equipment installation.",
     telephone: "+44-7438-463543",
-    email: "ontime.inf@yahoo.com",
+    email: "ontime.info@yahoo.com",
     priceRange: "££",
     paymentAccepted: ["Cash", "Credit Card", "Bank Transfer"],
     currenciesAccepted: "GBP",

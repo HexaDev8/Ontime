@@ -254,7 +254,7 @@ export const ServicesSection: React.FC = () => {
                     <Zap className="w-4 h-4 text-cyan-400" /> Diagnostics & Gas Top-up
                   </div>
                   <p className="mt-1 text-[11px] text-slate-300 leading-snug">
-                    R32 & R410A refrigerant recharging, compressor inspection, thermostat sensor repair & PCB electrical fixes.
+                    R32,R410A,448A & 449A refrigerant recharging, compressor inspection, thermostat sensor repair & PCB electrical fixes.
                   </p>
                 </div>
               </div>
