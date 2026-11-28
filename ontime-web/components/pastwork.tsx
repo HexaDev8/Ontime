@@ -8,7 +8,7 @@
 
 "use client";
 
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { SectionHeading } from "./SectionHeading";
 import {
@@ -55,20 +55,20 @@ export const pastWorkData: PastWorkItem[] = [
       "Maintain an immaculate, hygienic, and welcoming environment with our specialized deep cleaning teams. From corporate floors requiring pristine presentation to fast student apartment turnovers and private villa sanitization, we deploy industrial HEPA scrubbers, rotary polishers, and hospital-grade eco disinfectants.",
     images: [
       {
-        src: "/images/pastwork/cleaning-1.jpg",
-        caption: "Full living room deep scrub & floor buffing",
+        src: "/images/pastwork/Apartment Cleaning.jpeg",
+        caption: "Apartments cleaning & sanitization",
       },
       {
-        src: "/images/pastwork/cleaning-2.jpg",
-        caption: "Student apartment kitchen & surface sanitization",
+        src: "/images/pastwork/Bathroom Cleaning.jpeg",
+        caption: "Bathroom clean & sanitization",
       },
       {
-        src: "/images/pastwork/cleaning-3.jpg",
-        caption: "Private residence bedroom & upholstery refresh",
+        src: "/images/pastwork/Student Apartment Cleaning.jpeg",
+        caption: "Student apartment cleaning & sanitization",
       },
       {
-        src: "/images/pastwork/cleaning-4.jpg",
-        caption: "Post-lease turnover & spotless handover",
+        src: "/images/pastwork/Office Cleaning.jpeg",
+        caption: "Office cleaning & sanitization",
       },
     ],
     features: [
@@ -93,20 +93,16 @@ export const pastWorkData: PastWorkItem[] = [
       "Restore ice-cold airflow, eliminate musty odors, and prevent compressor burnout. Our certified HVAC technicians perform high-pressure chemical coil washes, anti-bacterial filter sanitization, drain pipe descaling, R32 & R410A refrigerant gas top-ups, and PCB electrical troubleshooting.",
     images: [
       {
-        src: "/images/pastwork/ac-1.jpg",
-        caption: "Indoor split unit high-pressure coil wash",
+        src: "/images/pastwork/Roof Top AC Repair.jpeg",
+        caption: "Roof top ac repair",
       },
       {
-        src: "/images/pastwork/ac-2.jpg",
-        caption: "Anti-bacterial chemical bath & blower rotor clearing",
+        src: "/images/pastwork/Compressor replacement.jpeg",
+        caption: "Compressor replacement",
       },
       {
-        src: "/images/pastwork/ac-3.jpg",
-        caption: "R32/R410A manifold gauge pressure test & gas refill",
-      },
-      {
-        src: "/images/pastwork/ac-4.jpg",
-        caption: "Condenser fan motor diagnostic & safety inspection",
+        src: "/images/pastwork/Shop Refrigerator Repair.jpeg",
+        caption: "Shop display refrigerator repair",
       },
     ],
     features: [
@@ -131,20 +127,16 @@ export const pastWorkData: PastWorkItem[] = [
       "Stop leaks, restore optimal water pressure, and modernize your bathroom plumbing. Our plumbers handle emergency burst pipes, sewer line blockages, PPR/copper piping installations, and precision assembly of luxury bathroom commodes, mixer taps, shower sets, and hot water geysers.",
     images: [
       {
-        src: "/images/pastwork/plumbing-1.jpg",
-        caption: "Under-sink copper & PVC drainage pipe assembly",
+        src: "/images/pastwork/Sanitary Fittings.jpeg",
+        caption: "Sanitary fittings",
       },
       {
-        src: "/images/pastwork/plumbing-2.jpg",
-        caption: "Main water line pressure testing & leak sealing",
+        src: "/images/pastwork/Hot Water Pipe installation.jpeg",
+        caption: "Hot water pipe installation",
       },
       {
-        src: "/images/pastwork/plumbing-3.jpg",
-        caption: "Concealed shower valve & hot/cold mixer calibration",
-      },
-      {
-        src: "/images/pastwork/plumbing-4.jpg",
-        caption: "Hot water geyser connection & safety relief valve",
+        src: "/images/pastwork/Shower installation.jpeg",
+        caption: "Shower installation",
       },
     ],
     features: [
@@ -169,20 +161,16 @@ export const pastWorkData: PastWorkItem[] = [
       "Guarantee uninterrupted, safe electrical power with certified electricians. We diagnose tripping safety breakers, short circuits, and voltage fluctuations, while offering complete rewiring, modern distribution board (DB) installations, chandeliers, architectural LED downlights, and security lighting.",
     images: [
       {
-        src: "/images/pastwork/electrical-1.jpg",
-        caption: "Main distribution board (DB) rewiring & breaker install",
+        src: "/images/pastwork/Distribution board installation.jpg",
+        caption: "Distribution board installation",
       },
       {
-        src: "/images/pastwork/electrical-2.jpg",
-        caption: "RCD safety trip diagnosis & circuit breaker testing",
+        src: "/images/pastwork/Flood light installation.jpg",
+        caption: "Flood light installation",
       },
       {
-        src: "/images/pastwork/electrical-3.jpg",
-        caption: "Modern flush-mount switchboard & wiring alignment",
-      },
-      {
-        src: "/images/pastwork/electrical-4.jpg",
-        caption: "Commercial 3-phase load verification & conduit safety",
+        src: "/images/pastwork/Shop light installation.jpg",
+        caption: "Shop light installation",
       },
     ],
     features: [
@@ -207,16 +195,20 @@ export const pastWorkData: PastWorkItem[] = [
       "Extend the lifespan of your valuable appliances with rapid diagnostic repairs. Our appliance technicians service refrigerators, washing machines, microwaves, and electric ovens, sourcing genuine replacement parts for thermostats, drum bearings, drain pumps, and power control boards.",
     images: [
       {
-        src: "/images/pastwork/repair-1.jpg",
-        caption: "Washing machine drum bearing replacement & pump check",
+        src: "/images/pastwork/Compressor installation.jpeg",
+        caption: "Compressor installation",
       },
       {
-        src: "/images/pastwork/repair-2.jpg",
-        caption: "Refrigerator cooling coil & compressor restoration",
+        src: "/images/pastwork/Electronic Equipment Repairing.jpeg",
+        caption: "Electronic Equipment Repairing",
       },
       {
-        src: "/images/pastwork/repair-3.jpg",
-        caption: "Built-in oven thermostat & heating element rebuild",
+        src: "/images/pastwork/Shop Refrigerator Repair.jpeg",
+        caption: "Shop Refrigerator Repair",
+      },
+      {
+        src: "/images/pastwork/Refrigerator Repair.jpeg",
+        caption: "Refrigerator Repair",
       },
     ],
     features: [
@@ -241,20 +233,16 @@ export const pastWorkData: PastWorkItem[] = [
       "Turnkey installation and secure anchoring for modern home and commercial electronics. We provide precision wall mounting for flat-screen displays up to 85 inches, clean cable trunking, anti-vibration leveling, and water/drain plumbing connections for washing machines and smart refrigerators.",
     images: [
       {
-        src: "/images/pastwork/install-1.jpg",
-        caption: "Heavy-duty TV wall mounting with concealed conduit",
+        src: "/images/pastwork/TV Mounting.jpg",
+        caption: "TV wall mounting",
       },
       {
-        src: "/images/pastwork/install-2.jpg",
-        caption: "Display level testing & masonry bracket anchor lock",
+        src: "/images/pastwork/Washing Machine Installation.jpeg",
+        caption: "Washing Machine Installation",
       },
       {
-        src: "/images/pastwork/install-3.jpg",
-        caption: "Washing machine plumbing connection & vibration leveling",
-      },
-      {
-        src: "/images/pastwork/install-4.jpg",
-        caption: "Built-in kitchen oven cabinet integration & safety test",
+        src: "/images/pastwork/TV Mounting Office.jpeg",
+        caption: "TV Mounting in Meeting Room",
       },
     ],
     features: [
@@ -279,20 +267,16 @@ export const pastWorkData: PastWorkItem[] = [
       "Restore beauty and durability to walls, floors, and ceilings. Our skilled artisans provide smooth interior emulsion coats, weather-resistant exterior painting, cracked and hollow tile replacement, high-performance waterproof regrouting, and seamless plaster crack repairs.",
     images: [
       {
-        src: "/images/pastwork/finish-1.jpg",
-        caption: "Interior smooth wall emulsion & pristine ceiling coating",
+        src: "/images/pastwork/Bathroom Tiling.jpeg",
+        caption: "Bathroom Tiling",
       },
       {
-        src: "/images/pastwork/finish-2.jpg",
-        caption: "Exterior weather-shield protective paint application",
+        src: "/images/pastwork/Floor Polishing.jpeg",
+        caption: "Floor Polishing",
       },
       {
-        src: "/images/pastwork/finish-3.jpg",
-        caption: "Bathroom floor tile replacement & precision regrouting",
-      },
-      {
-        src: "/images/pastwork/finish-4.jpg",
-        caption: "Wall tile realignment, hollow re-bonding & clean sealant",
+        src: "/images/pastwork/Floor Tiling.jpeg",
+        caption: "Floor Tiling",
       },
     ],
     features: [
@@ -314,15 +298,50 @@ interface PastWorkCardProps {
 
 const PastWorkCard: React.FC<PastWorkCardProps> = ({ service, reversed = false }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
+  const advanceNext = useCallback(() => {
+    setCurrentImageIndex((prev) => (prev === service.images.length - 1 ? 0 : prev + 1));
+  }, [service.images.length]);
+
+  const advancePrev = useCallback(() => {
+    setCurrentImageIndex((prev) => (prev === 0 ? service.images.length - 1 : prev - 1));
+  }, [service.images.length]);
+
+  // Automatically advance slides every 4 seconds; pauses on hover and resets on manual interaction
+  useEffect(() => {
+    if (isPaused || service.images.length <= 1) return;
+    if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+    const timer = setTimeout(advanceNext, 4000);
+    return () => clearTimeout(timer);
+  }, [currentImageIndex, isPaused, service.images.length, advanceNext]);
 
   const prevImage = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setCurrentImageIndex((prev) => (prev === 0 ? service.images.length - 1 : prev - 1));
+    advancePrev();
   };
 
   const nextImage = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setCurrentImageIndex((prev) => (prev === service.images.length - 1 ? 0 : prev + 1));
+    advanceNext();
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (diff > 45) {
+      advanceNext();
+    } else if (diff < -45) {
+      advancePrev();
+    }
+    setTouchStartX(null);
   };
 
   const handleBookService = () => {
@@ -421,18 +440,30 @@ const PastWorkCard: React.FC<PastWorkCardProps> = ({ service, reversed = false }
 
       {/* ── Image Column with Carousel (5 cols) ── */}
       <div className={`lg:col-span-5 ${reversed ? "lg:order-1" : "lg:order-2"}`}>
-        <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3] w-full rounded-2xl overflow-hidden shadow-lg border border-slate-200/80 group select-none bg-slate-100">
-          <Image
-            src={activeImage.src}
-            alt={`${service.title} - ${activeImage.caption}`}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-            priority={service.serviceNumber === "1"}
-          />
+        <div
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3] w-full rounded-2xl overflow-hidden shadow-lg border border-slate-200/80 group select-none bg-slate-100"
+        >
+          {service.images.map((img, i) => (
+            <Image
+              key={img.src}
+              src={img.src}
+              alt={`${service.title} - ${img.caption}`}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
+              className={`object-cover transition-all duration-700 ease-in-out group-hover:scale-105 ${i === currentImageIndex
+                ? "opacity-100 z-[1]"
+                : "opacity-0 z-0 pointer-events-none"
+                }`}
+              priority={service.serviceNumber === "1" && i === 0}
+            />
+          ))}
 
           {/* Subtle gradient vignette at bottom */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute inset-0 z-[2] bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none" />
 
           {/* Navigation Buttons: Previous and Next */}
           <button
@@ -453,32 +484,11 @@ const PastWorkCard: React.FC<PastWorkCardProps> = ({ service, reversed = false }
             <ChevronRight className="w-5 h-5" />
           </button>
 
-          {/* Image Caption & Slide Indicator at bottom */}
-          <div className="absolute bottom-3 left-3 right-3 z-10 flex items-center justify-between gap-2 pointer-events-auto">
-            <p className="text-white text-xs font-medium truncate drop-shadow-sm bg-slate-900/50 backdrop-blur-sm px-2.5 py-1 rounded-lg border border-white/10 max-w-[65%]">
+          {/* Image Caption at bottom */}
+          <div className="absolute bottom-3 left-3 right-3 z-10 flex items-center pointer-events-none">
+            <p className="text-white text-xs font-medium truncate drop-shadow-sm bg-slate-900/50 backdrop-blur-sm px-2.5 py-1 rounded-lg border border-white/10 max-w-full">
               {activeImage.caption}
             </p>
-
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/70 backdrop-blur-md border border-white/20 shrink-0">
-              {service.images.map((_, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setCurrentImageIndex(i);
-                  }}
-                  aria-label={`Go to slide ${i + 1}`}
-                  className={`transition-all rounded-full cursor-pointer ${currentImageIndex === i
-                    ? "w-4 h-1.5 bg-sky-400"
-                    : "w-1.5 h-1.5 bg-white/60 hover:bg-white"
-                    }`}
-                />
-              ))}
-              <span className="text-[10px] text-white/90 font-bold ml-1">
-                {currentImageIndex + 1}/{service.images.length}
-              </span>
-            </div>
           </div>
         </div>
       </div>
